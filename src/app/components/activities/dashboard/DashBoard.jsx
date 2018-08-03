@@ -1,6 +1,7 @@
 import React from 'react';
 import ActivityList from '../activitylist/ActivityList';
-import { Grid } from 'semantic-ui-react';
+import ActivityForm from '../activityform/ActivityForm';
+import { Grid, Button } from 'semantic-ui-react';
 
 class DashBoard extends React.Component {
     render() {
@@ -10,7 +11,8 @@ class DashBoard extends React.Component {
                     <ActivityList />
                 </Grid.Column>
                 <Grid.Column width={6}>
-                    <h2>The Right Part</h2>
+                    <Button positive content="创建活动" />
+                    <ActivityForm />
                 </Grid.Column>
             </Grid>
         );
