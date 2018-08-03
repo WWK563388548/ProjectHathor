@@ -15,8 +15,8 @@ class NavBar extends React.Component {
                         <Button floated="right" positive inverted content="创建新活动"/>
                     </Menu.Item>
                     <Menu.Item position="right">
-                        <Button basic inverted content="Login"/>
-                        <Button basic inverted content="Sign Out" style={{marginLeft: '0.5em'}}/>
+                        <Button basic inverted content="登陆"/>
+                        <Button basic inverted content="注销" style={{marginLeft: '0.5em'}}/>
                     </Menu.Item>
                 </Container>
             </Menu>

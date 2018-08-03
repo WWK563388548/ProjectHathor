@@ -14,7 +14,7 @@ class ActivityListItem extends React.Component {
                             <Item.Content>
                                 <Item.Header as="a">Flutter开发跨平台App学习会</Item.Header>
                                 <Item.Description>
-                                    组织者 <a>Weikai Wang</a>
+                                    组织者: <a>Weikai Wang</a>
                                 </Item.Description>
                             </Item.Content>
                         </Item>
