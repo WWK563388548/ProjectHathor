@@ -14,7 +14,7 @@ class ActivityListItem extends React.Component {
                             <Item.Content>
                                 <Item.Header as="a">Flutter开发跨平台App学习会</Item.Header>
                                 <Item.Description>
-                                    主办人 <a>Weikai Wang</a>
+                                    组织者 <a>Weikai Wang</a>
                                 </Item.Description>
                             </Item.Content>
                         </Item>
@@ -36,7 +36,7 @@ class ActivityListItem extends React.Component {
 
                 <Segment clearing>
                     <span>这里是简介</span>
-                    <Button as="a" color="teal" floated="right" content="View" />
+                    <Button as="a" color="teal" floated="right" content="详细" />
                 </Segment>
             </Segment.Group>
         );
