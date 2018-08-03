@@ -10,7 +10,7 @@ class ActivityListItem extends React.Component {
                 <Segment>
                     <Item.Group>
                         <Item>
-                            <Item.Image size="tiny" circular src="https://randomuser.me/api/portraits/men/11.jpg" />
+                            <Item.Image size="tiny" circular src="https://randomuser.me/api/portraits/men/75.jpg" />
                             <Item.Content>
                                 <Item.Header as="a">Flutter开发跨平台App学习会</Item.Header>
                                 <Item.Description>
@@ -30,10 +30,7 @@ class ActivityListItem extends React.Component {
 
                 <Segment secondary>
                     <List horizontal>
-                        {/* Participants in here */}
-                        <List horizontal>
-                            <ActivityListParticipant />
-                        </List>
+                        <ActivityListParticipant />
                     </List>
                 </Segment>
 
