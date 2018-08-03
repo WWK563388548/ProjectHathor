@@ -1,4 +1,5 @@
 import React from 'react';
+import ActivityList from '../activitylist/ActivityList';
 import { Grid } from 'semantic-ui-react';
 
 class DashBoard extends React.Component {
@@ -6,7 +7,7 @@ class DashBoard extends React.Component {
         return (
             <Grid>
                 <Grid.Column width={10}>
-                    <h2>The Left Part</h2>
+                    <ActivityList />
                 </Grid.Column>
                 <Grid.Column width={6}>
                     <h2>The Right Part</h2>
