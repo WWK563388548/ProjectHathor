@@ -3,13 +3,13 @@ import ActivityListItem from './ActivityListItem';
 
 class ActivityList extends React.Component {
     render() {
+        const activities = this.props.activities;
         return (
             <div>
                 <h1>活动列表</h1>
-                <ActivityListItem />
-                <ActivityListItem />
-                <ActivityListItem />
-                <ActivityListItem />
+                {activities.map(item => {
+                    return <ActivityListItem key={item.id} activity={item} />;
+                })}
             </div>
         );
     }

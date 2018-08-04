@@ -4,17 +4,18 @@ import { Segment, Item, Icon, List, Button } from 'semantic-ui-react';
 
 class ActivityListItem extends React.Component {
     render() {
+        const activityItemData = this.props.activity;
         return (
             <Segment.Group>
 
                 <Segment>
                     <Item.Group>
                         <Item>
-                            <Item.Image size="tiny" circular src="https://randomuser.me/api/portraits/men/75.jpg" />
+                            <Item.Image size="tiny" circular src={activityItemData.hostPhotoURL} />
                             <Item.Content>
-                                <Item.Header as="a">Flutter开发跨平台App学习会</Item.Header>
+                                <Item.Header as="a">{activityItemData.title}</Item.Header>
                                 <Item.Description>
-                                    组织者: <a>Weikai Wang</a>
+                                    组织者: <a>{activityItemData.hostedBy}</a>
                                 </Item.Description>
                             </Item.Content>
                         </Item>
@@ -23,19 +24,21 @@ class ActivityListItem extends React.Component {
 
                 <Segment>   
                     <span>
-                        <Icon name="clock" /> 日期 |
-                        <Icon name="marker" /> 地点
+                        <Icon name="clock" /> {activityItemData.date} |
+                        <Icon name="marker" /> {activityItemData.location}
                     </span>
                 </Segment>
 
                 <Segment secondary>
                     <List horizontal>
-                        <ActivityListParticipant />
+                        {activityItemData.participants.map( item => {
+                            return <ActivityListParticipant key={item.id} participant={item} />;
+                        })}
                     </List>
                 </Segment>
 
                 <Segment clearing>
-                    <span>这里是简介</span>
+                    <span>{activityItemData.description}</span>
                     <Button as="a" color="teal" floated="right" content="详细" />
                 </Segment>
             </Segment.Group>
