@@ -76,7 +76,8 @@ class DashBoard extends React.Component {
     });
   }
 
-  handleClose() {
+  // 更好的函数绑定方法2
+  handleClose = () => {
     this.setState({
       isOpen: false,
     });
@@ -90,11 +91,11 @@ class DashBoard extends React.Component {
         </Grid.Column>
         <Grid.Column width={6}>
           {
-            // 更好的函数绑定方法
+            // 更好的函数绑定方法1
           }
           <Button onClick={() => {this.handleFormOpen()}} positive content="创建新活动" />
             {this.state.isOpen && 
-              <ActivityForm onClick={() => {this.handleClose()}} />
+              <ActivityForm onClick={this.handleClose} />
             }
         </Grid.Column>
       </Grid>
