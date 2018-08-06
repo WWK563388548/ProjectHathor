@@ -56,19 +56,50 @@ const activitiesData = [
   ]
 
 class DashBoard extends React.Component {
-    render() {
-        return (
-            <Grid>
-                <Grid.Column width={10}>
-                    <ActivityList activities={activitiesData} />
-                </Grid.Column>
-                <Grid.Column width={6}>
-                    <Button positive content="创建新活动" />
-                    <ActivityForm />
-                </Grid.Column>
-            </Grid>
-        );
-    }
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      activities: activitiesData,
+      isOpen: false,
+    };
+
+    // 这种函数绑定方法不好，但能用
+    // this.handleFormOpen = this.handleFormOpen.bind(this);
+    // this.handleClose = this.handleClose.bind(this);
+  }
+
+  handleFormOpen() {
+    this.setState({
+      isOpen: true,
+    });
+  }
+
+  handleClose() {
+    this.setState({
+      isOpen: false,
+    });
+  }
+
+  render() {
+    return (
+      <Grid>
+        <Grid.Column width={10}>
+          <ActivityList activities={this.state.activities} />
+        </Grid.Column>
+        <Grid.Column width={6}>
+          {
+            // 更好的函数绑定方法
+          }
+          <Button onClick={() => {this.handleFormOpen()}} positive content="创建新活动" />
+            {this.state.isOpen && 
+              <ActivityForm onClick={() => {this.handleClose()}} />
+            }
+        </Grid.Column>
+      </Grid>
+    );
+  }
 }
 
 export default DashBoard;
