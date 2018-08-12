@@ -5,6 +5,7 @@ import { Segment, Item, Icon, List, Button } from 'semantic-ui-react';
 class ActivityListItem extends React.Component {
     render() {
         const activityItemData = this.props.activity;
+        const onActivityEdit = this.props.onActivityEdit;
         return (
             <Segment.Group>
 
@@ -42,7 +43,12 @@ class ActivityListItem extends React.Component {
 
                 <Segment clearing>
                     <span>{activityItemData.description}</span>
-                    <Button as="a" color="teal" floated="right" content="详细" />
+                    <Button
+                    as="a" 
+                    color="teal" 
+                    floated="right" 
+                    content="详细"
+                    onClick={onActivityEdit(activityItemData)} />
                 </Segment>
             </Segment.Group>
         );

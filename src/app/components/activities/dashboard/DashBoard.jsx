@@ -64,6 +64,7 @@ class DashBoard extends React.Component {
     this.state = {
       activities: activitiesData,
       isOpen: false,
+      selectedActivity: null,
     };
 
     // 这种函数绑定方法不好，但能用
@@ -71,8 +72,16 @@ class DashBoard extends React.Component {
     // this.handleClose = this.handleClose.bind(this);
   }
 
-  handleFormOpen() {
+  handleEditActivity = (activityToEvent) => () => {
     this.setState({
+      selectedActivity: activityToEvent,
+      isOpen: true
+    });
+  }
+
+  handleFormOpen = () => {
+    this.setState({
+      selectedActivity: null,
       isOpen: true,
     });
   }
@@ -96,21 +105,24 @@ class DashBoard extends React.Component {
   }
 
   render() {
+    const selectedActivity = this.state.selectedActivity;
     return (
       <Grid>
         <Grid.Column width={10}>
-          <ActivityList activities={this.state.activities} />
+          <ActivityList
+          onActivityEdit={this.handleEditActivity}
+          activities={this.state.activities} />
         </Grid.Column>
         <Grid.Column width={6}>
           {
             // 更好的函数绑定方法1
           }
           <Button 
-
           onClick={() => {this.handleFormOpen()}} 
           positive content="创建新活动" />
             {this.state.isOpen && 
-              <ActivityForm 
+              <ActivityForm
+              selectedActivity={selectedActivity} 
               createActivity={this.handleCreateActivity}
               onClick={this.handleClose} />
             }
