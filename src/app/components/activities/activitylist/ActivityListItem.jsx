@@ -31,7 +31,10 @@ class ActivityListItem extends React.Component {
 
                 <Segment secondary>
                     <List horizontal>
-                        {activityItemData.participants.map( item => {
+                        {
+                            /* 判断参与者数组是否为空 */
+                        }
+                        {activityItemData.participants && activityItemData.participants.map( item => {
                             return <ActivityListParticipant key={item.id} participant={item} />;
                         })}
                     </List>
