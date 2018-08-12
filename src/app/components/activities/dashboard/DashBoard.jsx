@@ -2,6 +2,7 @@ import React from 'react';
 import ActivityList from '../activitylist/ActivityList';
 import ActivityForm from '../activityform/ActivityForm';
 import { Grid, Button } from 'semantic-ui-react';
+import cuid from 'cuid';
 
 // Fake data
 const activitiesData = [
@@ -83,6 +84,17 @@ class DashBoard extends React.Component {
     });
   }
 
+  handleCreateActivity = (newActivity) => {
+    // Generate a random Ids for us
+    newActivity.id = cuid();
+    newActivity.hostPhotoURL = 'assets/user.png';
+    const updatedActivity = [...this.state.activities, newActivity];
+    this.setState({
+      activities: updatedActivity,
+      isOpen: false,
+    });
+  }
+
   render() {
     return (
       <Grid>
@@ -93,9 +105,14 @@ class DashBoard extends React.Component {
           {
             // 更好的函数绑定方法1
           }
-          <Button onClick={() => {this.handleFormOpen()}} positive content="创建新活动" />
+          <Button 
+
+          onClick={() => {this.handleFormOpen()}} 
+          positive content="创建新活动" />
             {this.state.isOpen && 
-              <ActivityForm onClick={this.handleClose} />
+              <ActivityForm 
+              createActivity={this.handleCreateActivity}
+              onClick={this.handleClose} />
             }
         </Grid.Column>
       </Grid>
