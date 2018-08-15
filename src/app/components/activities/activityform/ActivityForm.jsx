@@ -1,15 +1,48 @@
 import React from 'react';
 import { Segment, Form, Button } from 'semantic-ui-react';
 
+const emptyActivity = {
+  title: '',
+  date: '',
+  city: '',
+  location: '',
+  hostedBy: '',
+}
+
 class ActivityForm extends React.Component {
 
   state = {
-    event: {
-      title: '',
-      date: '',
-      city: '',
-      location: '',
-      hostedBy: '',
+    event: emptyActivity
+  }
+
+  /**
+   * componentDidMount(){}: 
+   * 在组件安装(Mount)好后立即执行，在这里设置state将
+   * 开始重写渲染组件(之后不会再被调用，哪怕是属性改变)
+   */
+  componentDidMount() {
+    // console.log(this.props);
+    if(this.props.selectedActivity !== null){
+      this.setState({
+        event: this.props.selectedActivity,
+      });
+    }
+  }
+
+  /**
+   * 当组件可能收到新props时调用此方法。
+   * React在props没有改变的情况下依然会调用此方法，
+   * 如果想去处理改变，可以去比较新的props和现存的props。
+   * （在componentDidMount()中调用setState不会引发此方法）
+   */
+  componentWillReceiveProps(newProps) {
+    console.log('current: ', this.props);
+    console.log('new: ', newProps);
+    if(newProps.selectedActivity !== this.props.selectedActivity) {
+      this.setState({
+        // newProps.selectedActivity在新建活动时是null
+        event: newProps.selectedActivity || emptyActivity,
+      });
     }
   }
 
