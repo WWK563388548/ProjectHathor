@@ -79,6 +79,20 @@ class DashBoard extends React.Component {
     });
   }
 
+  handleUpdateActivity = (updatedActivity) => {
+    this.setState({
+      activities: this.state.activities.map(activity => {
+        if(activity.id === updatedActivity.id) {
+          return Object.assign({}, updatedActivity);
+        } else {
+          return activity;
+        }
+      }),
+      isOpen: false,
+      selectedActivity: null,
+    });
+  }
+
   handleFormOpen = () => {
     this.setState({
       selectedActivity: null,
@@ -122,6 +136,7 @@ class DashBoard extends React.Component {
           positive content="创建新活动" />
             {this.state.isOpen && 
               <ActivityForm
+              updateActivity={this.handleUpdateActivity}
               selectedActivity={selectedActivity} 
               createActivity={this.handleCreateActivity}
               onClick={this.handleClose} />

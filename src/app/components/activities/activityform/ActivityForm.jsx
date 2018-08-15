@@ -48,8 +48,12 @@ class ActivityForm extends React.Component {
 
   onFormSubmit = (event) => {
     event.preventDefault();
-    // console.log(this.state.event);
-    this.props.createActivity(this.state.event);
+    console.log(this.state.event);
+    if(this.state.event.id){
+      this.props.updateActivity(this.state.event);
+    } else {
+      this.props.createActivity(this.state.event);
+    }
   }
 
   onInputChange = (event) => {
