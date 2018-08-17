@@ -112,6 +112,7 @@ class DashBoard extends React.Component {
     newActivity.id = cuid();
     newActivity.hostPhotoURL = 'assets/user.png';
     const updatedActivity = [...this.state.activities, newActivity];
+    console.log(updatedActivity);
     this.setState({
       activities: updatedActivity,
       isOpen: false,
