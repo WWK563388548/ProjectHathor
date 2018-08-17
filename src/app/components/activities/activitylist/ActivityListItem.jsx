@@ -6,6 +6,8 @@ class ActivityListItem extends React.Component {
     render() {
         const activityItemData = this.props.activity;
         const onActivityEdit = this.props.onActivityEdit;
+        const deleteActivity = this.props.deleteActivity;
+        
         return (
             <Segment.Group>
 
@@ -43,6 +45,12 @@ class ActivityListItem extends React.Component {
 
                 <Segment clearing>
                     <span>{activityItemData.description}</span>
+                    <Button
+                    as="a" 
+                    color="red" 
+                    floated="right" 
+                    content="删除"
+                    onClick={deleteActivity(activityItemData.id)} />
                     <Button
                     as="a" 
                     color="teal" 

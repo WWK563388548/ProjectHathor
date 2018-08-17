@@ -48,7 +48,7 @@ class ActivityForm extends React.Component {
 
   onFormSubmit = (event) => {
     event.preventDefault();
-    console.log(this.state.event);
+    // console.log(this.state.event);
     if(this.state.event.id){
       this.props.updateActivity(this.state.event);
     } else {

@@ -118,12 +118,22 @@ class DashBoard extends React.Component {
     });
   }
 
+  handleDeleteActivity = (activityId) => () => {
+    const updatedActivities = this.state.activities.filter(a => {
+      return a.id !== activityId
+    });
+    this.setState({
+      activities: updatedActivities,
+    });
+  }
+
   render() {
     const selectedActivity = this.state.selectedActivity;
     return (
       <Grid>
         <Grid.Column width={10}>
           <ActivityList
+          deleteActivity={this.handleDeleteActivity}
           onActivityEdit={this.handleEditActivity}
           activities={this.state.activities} />
         </Grid.Column>
