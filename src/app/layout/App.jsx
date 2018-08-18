@@ -17,7 +17,10 @@ class App extends Component {
       <div>
         <NavBar/>
         <Container className="main">
-          <Route path='/' component={HomePage} />
+          {
+            // exact：严格匹配路由，使‘／’与‘／xxx’不匹配
+          }
+          <Route exact path='/' component={HomePage} />
           <Route path='/activities' component={DashBoard} />
           <Route path='/activity/:id' component={ActivityDetailPage} />
           <Route path='/people' component={PeopleDashBoard} />
