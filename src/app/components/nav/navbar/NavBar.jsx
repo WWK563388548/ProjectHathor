@@ -9,7 +9,7 @@ class NavBar extends React.Component {
                 <Container>
                     <Menu.Item header as={Link} to='/' >
                         <img src="assets/logo.png" alt="Logo"/>
-                        Ha-thor
+                        聚乐
                     </Menu.Item>
                     <Menu.Item name="活动列表" as={NavLink} to='/activities' />
                     <Menu.Item name="用户" as={NavLink} to='/people' />
