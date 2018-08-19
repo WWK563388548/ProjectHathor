@@ -5,7 +5,25 @@ import SignOutMenu from './SignOutMenu';
 import SignInMenu from './SignInMenu';
 
 class NavBar extends React.Component {
+
+    state = {
+        authenticated: false,
+    }
+
+    handleSignIn = () => {
+        this.setState({
+            authenticated: true,
+        });
+    }
+
+    handleSignOut = () => {
+        this.setState({
+            authenticated: false,
+        });
+    }
+
     render() {
+        const isAuth = this.state.authenticated;
         return (
             <Menu inverted fixed="top">
                 <Container>
@@ -18,8 +36,14 @@ class NavBar extends React.Component {
                     <Menu.Item>
                         <Button as={Link} to='/createActivity' floated="right" positive inverted content="创建新活动"/>
                     </Menu.Item>
-                    <SignInMenu />
-                    <SignOutMenu />
+                    {
+                        // 若登陆显示<SignInMenu />, 反之则显示<SignOutMenu />
+                    }
+                    { isAuth ? (
+                        <SignInMenu signOut={this.handleSignOut} />
+                    ) : (
+                        <SignOutMenu signIn={this.handleSignIn} />
+                    )}
                 </Container>
             </Menu>
         );
