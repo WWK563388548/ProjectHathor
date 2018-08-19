@@ -1,6 +1,7 @@
 import React from 'react';
 import { Menu, Container, Button } from 'semantic-ui-react';
-import { NavLink, Link } from 'react-router-dom';
+// 'withRouter' 基本上就是一个函数，它使一个组件返回到另一个组件
+import { NavLink, Link, withRouter } from 'react-router-dom';
 import SignOutMenu from './SignOutMenu';
 import SignInMenu from './SignInMenu';
 
@@ -20,6 +21,7 @@ class NavBar extends React.Component {
         this.setState({
             authenticated: false,
         });
+        this.props.history.push('/');
     }
 
     render() {
@@ -32,10 +34,12 @@ class NavBar extends React.Component {
                         聚乐
                     </Menu.Item>
                     <Menu.Item name="活动列表" as={NavLink} to='/activities' />
-                    <Menu.Item name="用户" as={NavLink} to='/people' />
-                    <Menu.Item>
-                        <Button as={Link} to='/createActivity' floated="right" positive inverted content="创建新活动"/>
-                    </Menu.Item>
+                    { isAuth && <Menu.Item name="用户" as={NavLink} to='/people' /> }
+                    {isAuth && (
+                        <Menu.Item>
+                            <Button as={Link} to='/createActivity' floated="right" positive inverted content="创建新活动"/>
+                        </Menu.Item>
+                    )}
                     {
                         // 若登陆显示<SignInMenu />, 反之则显示<SignOutMenu />
                     }
@@ -49,5 +53,5 @@ class NavBar extends React.Component {
         );
     }
 }
-
-export default NavBar;
+// 使用'withRouter'
+export default withRouter(NavBar);
