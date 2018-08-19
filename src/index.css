@@ -4,6 +4,37 @@ body {
 
 /* home page styles */
 
+.masthead {
+  background-image: linear-gradient(
+          135deg,
+          rgb(24, 42, 115) 0%,
+          rgb(33, 138, 174) 69%,
+          rgb(32, 167, 172) 89%
+  ) !important;
+}
+
+.masthead.segment {
+  min-height: 700px;
+  padding: 1em 0 !important;
+}
+
+.masthead .ui.menu .ui.button,
+.ui.menu a.ui.inverted.button {
+  margin-left: 0.5em;
+}
+
+.masthead h1.ui.header {
+  margin-top: 3em;
+  margin-bottom: 0;
+  font-size: 4em;
+  font-weight: normal;
+}
+
+.masthead h2 {
+  font-size: 1.7em;
+  font-weight: normal;
+}
+
 
 /* navbar styles */
 .ui.menu .item img.logo {
