@@ -30,7 +30,7 @@ class NavBar extends React.Component {
             <Menu inverted fixed="top">
                 <Container>
                     <Menu.Item header as={Link} to='/' >
-                        <img src="assets/logo.png" alt="Logo"/>
+                        <img src="/assets/logo.png" alt="Logo"/>
                         聚乐
                     </Menu.Item>
                     <Menu.Item name="活动列表" as={NavLink} to='/activities' />
