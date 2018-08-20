@@ -4,7 +4,7 @@ import React from 'react';
 const PhotosPage = () => {
     return (
         <div>
-            <h1>Basic Page</h1>
+            <h1>Photos Page</h1>
         </div>
     );
 }
