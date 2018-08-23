@@ -1,4 +1,5 @@
 import { createStore, applyMiddleware, compose } from 'redux';
+import rootReducer from '../reducer/rootReducer';
 
 export const configureStore = (preloadedState) => {
     const middlewares = [];
@@ -6,7 +7,6 @@ export const configureStore = (preloadedState) => {
     const storeEnhancers = [middlewareEnhancer];
     const composedEnhancer = compose(...storeEnhancers);
     const store = createStore(
-        // Has not create this reducer yet
         rootReducer,
         preloadedState,
         composedEnhancer
