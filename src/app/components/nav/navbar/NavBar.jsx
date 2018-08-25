@@ -34,6 +34,7 @@ class NavBar extends React.Component {
                         聚乐
                     </Menu.Item>
                     <Menu.Item name="活动列表" as={NavLink} to='/activities' />
+                    <Menu.Item name="test" as={NavLink} to='/reduxtest' />
                     { isAuth && <Menu.Item name="用户" as={NavLink} to='/people' /> }
                     {isAuth && (
                         <Menu.Item>
