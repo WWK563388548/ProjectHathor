@@ -1,5 +1,5 @@
 const initialState = {
-    data: "This is test reducer."
+    data: "This is test reducer!!!!!"
 }
 
 const testReducer = (state = initialState, action) => {
