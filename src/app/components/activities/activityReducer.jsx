@@ -55,16 +55,15 @@ const initialState = [
   const activityReducer = (state = initialState, action) => {
       switch(action.type) {
         case CREATE_ACTIVITY:
-            return [...state, Object.assgin({}, action.payload.activity)];
+            return [...state, Object.assign({}, action.payload.activity)];
         case UPDATE_ACTIVITY:
             return [
                 ...state.filter(event => event.id !== action.payload.activity.id),
-                 Object.assgin({}, action.payload.activity)
+                 Object.assign({}, action.payload.activity)
             ];
         case DELETE_ACTIVITY:
             return [
-                ...state.filter(event => event.id !== action.payload.activityId),
-                Object.assgin({}, action.payload)
+                ...state.filter(event => event.id !== action.payload.activityId)
             ];
         default:
             return state;
