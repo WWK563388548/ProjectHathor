@@ -9,6 +9,7 @@ import UserDetailPage from '../components/user/userdetail/UserDetailPage';
 import SettingsDashBoard from '../components/user/settings/SettingsDashBoard';
 import ActivityForm from '../components/activities/activityform/ActivityForm';
 import HomePage from '../components/home/HomePage';
+import ReduxTestComponent from '../components/testarea/ReduxTestComponet';
 
 /**
 *  <Switch>是唯一的因为它仅仅只会渲染一个(相匹配的)路径。
@@ -36,6 +37,7 @@ class App extends Component {
                 <Container className="main">
                   <Switch>
                     <Route path='/activities' component={DashBoard} />
+                    <Route path='/reduxtest' component={ReduxTestComponent} />
                     <Route path='/activity/:id' component={ActivityDetailPage} />
                     <Route path='/people' component={PeopleDashBoard} />
                     <Route path='/profile/:id' component={UserDetailPage} />
