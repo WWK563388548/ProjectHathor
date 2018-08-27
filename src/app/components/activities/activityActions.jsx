@@ -2,7 +2,7 @@ import { CREATE_ACTIVITY, UPDATE_ACTIVITY, DELETE_ACTIVITY } from './activityCon
 
 export const createActivity = (activity) => {
     return {
-        types: CREATE_ACTIVITY,
+        type: CREATE_ACTIVITY,
         payload: {
             activity
         }
@@ -11,7 +11,7 @@ export const createActivity = (activity) => {
 
 export const updateActivity = (activity) => {
     return {
-        types: UPDATE_ACTIVITY,
+        type: UPDATE_ACTIVITY,
         payload: {
             activity
         }
@@ -20,7 +20,7 @@ export const updateActivity = (activity) => {
 
 export const deleteActivity = (activityId) => {
     return {
-        types: DELETE_ACTIVITY,
+        type: DELETE_ACTIVITY,
         payload: {
             activityId
         }
