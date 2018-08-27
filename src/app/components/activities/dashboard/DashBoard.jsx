@@ -3,11 +3,18 @@ import { connect } from 'react-redux';
 import ActivityList from '../activitylist/ActivityList';
 import ActivityForm from '../activityform/ActivityForm';
 import { Grid, Button } from 'semantic-ui-react';
+import { createActivity, updateActivity, deleteActivity } from '../activityActions'
 import cuid from 'cuid';
 
 const mapState = (state) => ({
   activities: state.activities
 });
+
+const actions = {
+  createActivity,
+  updateActivity,
+  deleteActivity,
+}
 
 class DashBoard extends React.Component {
 
@@ -32,14 +39,8 @@ class DashBoard extends React.Component {
   }
 
   handleUpdateActivity = (updatedActivity) => {
+    this.props.updateActivity(updatedActivity);
     this.setState({
-      activities: this.state.activities.map(activity => {
-        if(activity.id === updatedActivity.id) {
-          return Object.assign({}, updatedActivity);
-        } else {
-          return activity;
-        }
-      }),
       isOpen: false,
       selectedActivity: null,
     });
@@ -63,21 +64,14 @@ class DashBoard extends React.Component {
     // Generate a random Ids for us
     newActivity.id = cuid();
     newActivity.hostPhotoURL = 'assets/user.png';
-    const updatedActivity = [...this.state.activities, newActivity];
-    console.log(updatedActivity);
+    this.props.createActivity(newActivity);
     this.setState({
-      activities: updatedActivity,
       isOpen: false,
     });
   }
 
   handleDeleteActivity = (activityId) => () => {
-    const updatedActivities = this.state.activities.filter(a => {
-      return a.id !== activityId
-    });
-    this.setState({
-      activities: updatedActivities,
-    });
+    this.props.deleteActivity(activityId);
   }
 
   render() {
@@ -110,4 +104,4 @@ class DashBoard extends React.Component {
   }
 }
 
-export default connect(mapState)(DashBoard);
+export default connect(mapState, actions)(DashBoard);
