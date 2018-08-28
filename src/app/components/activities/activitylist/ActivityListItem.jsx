@@ -1,6 +1,7 @@
 import React from 'react';
 import ActivityListParticipant from './ActivityListParticipant';
 import { Segment, Item, Icon, List, Button } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 
 class ActivityListItem extends React.Component {
     render() {
@@ -51,12 +52,14 @@ class ActivityListItem extends React.Component {
                     floated="right" 
                     content="删除"
                     onClick={deleteActivity(activityItemData.id)} />
+                    {console.log(activityItemData)}
+                    {console.log(activityItemData.id)}
                     <Button
-                    as="a" 
+                    as={Link}
+                    to={`/activity/${activityItemData.id}`}
                     color="teal" 
                     floated="right" 
-                    content="详细"
-                    onClick={onActivityEdit(activityItemData)} />
+                    content="详细" />
                 </Segment>
             </Segment.Group>
         );
