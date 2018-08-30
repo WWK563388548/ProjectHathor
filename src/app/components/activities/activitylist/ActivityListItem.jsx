@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 class ActivityListItem extends React.Component {
     render() {
         const activityItemData = this.props.activity;
-        const onActivityEdit = this.props.onActivityEdit;
+        // const onActivityEdit = this.props.onActivityEdit;
         const deleteActivity = this.props.deleteActivity;
         
         return (

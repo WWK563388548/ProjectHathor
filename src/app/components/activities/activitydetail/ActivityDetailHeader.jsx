@@ -17,10 +17,12 @@ class ActiivityDetailHeader extends React.Component {
             color: 'white'
         };
 
+        const activity = this.props.activity;
+        console.log(activity);
         return (
             <Segment.Group>
                 <Segment basic attached="top" style={{ padding: '0' }} >
-                    <Image style={activityImageStyle} src="/assets/categoryImages/party.jpg" fluid />
+                    <Image style={activityImageStyle} src={`/assets/categoryImages/${activity.category}.jpg`} fluid />
     
                     <Segment basic style={activityImageTextStyle} >
                         <Item.Group>
@@ -28,12 +30,12 @@ class ActiivityDetailHeader extends React.Component {
                                 <Item.Content>
                                     <Header
                                         size="huge"
-                                        content="活动标题"
+                                        content={activity.title}
                                         style={{ color: 'white' }}
                                     />
-                                    <p>活动时间</p>
+                                    <p>{activity.date}</p>
                                     <p>
-                                        举办者: <strong>Weikai Wang</strong>
+                                        举办者: <strong>{activity.hostedBy}</strong>
                                     </p>
                                 </Item.Content>
                             </Item>

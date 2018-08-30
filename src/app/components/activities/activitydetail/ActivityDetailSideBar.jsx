@@ -3,6 +3,8 @@ import { Segment, List, Item, Label } from 'semantic-ui-react';
 
 class ActiivityDetailSideBar extends React.Component {
     render() {
+        const isHost = false;
+        const participants = this.props.participants;
         return (
             <div>
                 <Segment
@@ -13,25 +15,31 @@ class ActiivityDetailSideBar extends React.Component {
                     inverted
                     color="teal"
                 >
-                    2人参加
+                    {participants && participants.length} 名参加者
                 </Segment>
                 <Segment attached>
                     <List relaxed divided>
-                        <Item style={{ position: 'relative' }}>
-                            <Label
-                                style={{ position: 'absolute' }}
-                                color="orange"
-                                ribbon="right"
-                            >
-                                创办者
-                            </Label>
-                            <Item.Image size="tiny" src="/assets/user.png" />
-                            <Item.Content verticalAlign="middle">
-                                <Item.Header as="h3">
-                                    <a>Weikai Wang</a>
-                                </Item.Header>
-                            </Item.Content>
-                        </Item>
+                    {
+                        participants && participants.map(member => (
+                            <Item key={member.id} style={{ position: 'relative' }}>
+                                {isHost && (
+                                    <Label
+                                        style={{ position: 'absolute' }}
+                                        color="orange"
+                                        ribbon="right"
+                                    >   
+                                        创办者
+                                    </Label>
+                                )}
+                                <Item.Image size="tiny" src={member.photoURL} />
+                                <Item.Content verticalAlign="middle">
+                                    <Item.Header as="h3">
+                                        <a>{member.name}</a>
+                                    </Item.Header>
+                                </Item.Content>
+                            </Item>
+                        ))
+                    }
                     </List>
                 </Segment>
             </div>
