@@ -1,5 +1,6 @@
 import React from 'react';
 import { Segment, Image, Item, Header, Button } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 
 class ActiivityDetailHeader extends React.Component {
 
@@ -47,7 +48,7 @@ class ActiivityDetailHeader extends React.Component {
                     <Button>取消</Button>
                     <Button color="teal">参加活动</Button>
     
-                    <Button color="orange" floated="right">
+                    <Button as={Link} to={`/manage/${activity.id}`} color="orange" floated="right">
                         管理活动
                     </Button>
                 </Segment>

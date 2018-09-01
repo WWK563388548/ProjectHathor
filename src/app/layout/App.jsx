@@ -37,6 +37,7 @@ class App extends Component {
                   <Switch>
                     <Route path='/activities' component={DashBoard} />
                     <Route path='/activity/:id' component={ActivityDetailPage} />
+                    <Route path='/manage/:id' component={ActivityForm} />
                     <Route path='/people' component={PeopleDashBoard} />
                     <Route path='/profile/:id' component={UserDetailPage} />
                     <Route path='/settings' component={SettingsDashBoard} />
