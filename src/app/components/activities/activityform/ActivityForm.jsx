@@ -1,33 +1,38 @@
 import React from 'react';
 import { Segment, Form, Button } from 'semantic-ui-react';
+import { connect } from 'react-redux';
 
-const emptyActivity = {
-  title: '',
-  date: '',
-  city: '',
-  location: '',
-  hostedBy: '',
+const mapState = (state, ownProps) => {
+  const activityId = ownProps.match.params.id;
+  let activity = {
+    title: '',
+    date: '',
+    city: '',
+    location: '',
+    hostedBy: '',
+  }
+
+  if(activityId && state.activities.length > 0) {
+    activity = state.activities.filter(item => item.id === activityId)[0];
+  }
+
+  return activity;
 }
 
 class ActivityForm extends React.Component {
-
+  
   state = {
-    event: emptyActivity
+    event: Object.assign({}, this.props),
   }
-
+  
   /**
    * componentDidMount(){}: 
    * 在组件安装(Mount)好后立即执行，在这里设置state将
    * 开始重写渲染组件(之后不会再被调用，哪怕是属性改变)
    */
-  componentDidMount() {
-    // console.log(this.props);
-    if(this.props.selectedActivity !== null){
-      this.setState({
-        event: this.props.selectedActivity,
-      });
-    }
-  }
+  // componentDidMount() {
+    
+  // }
 
   /**
    * 当组件可能收到新props时调用此方法。
@@ -35,16 +40,9 @@ class ActivityForm extends React.Component {
    * 如果想去处理改变，可以去比较新的props和现存的props。
    * （在componentDidMount()中调用setState不会引发此方法）
    */
-  componentWillReceiveProps(newProps) {
-    console.log('current: ', this.props);
-    console.log('new: ', newProps);
-    if(newProps.selectedActivity !== this.props.selectedActivity) {
-      this.setState({
-        // newProps.selectedActivity在新建活动时是null
-        event: newProps.selectedActivity || emptyActivity,
-      });
-    }
-  }
+  // componentWillReceiveProps(newProps) {
+    
+  // }
 
   onFormSubmit = (event) => {
     event.preventDefault();
@@ -65,6 +63,7 @@ class ActivityForm extends React.Component {
   }
   
   render() {
+    console.log(this.props);
     const handleClose = this.props.onClick;
     // 使用'ref'获取值，代表uncontroled form
     return (
@@ -100,4 +99,4 @@ class ActivityForm extends React.Component {
   }
 }
 
-export default ActivityForm;
+export default connect(mapState)(ActivityForm);
