@@ -2,6 +2,7 @@ import React from 'react';
 import { Segment, Form, Button } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { createActivity, updateActivity } from '../activityActions';
+import cuid from 'cuid';
 
 const mapState = (state, ownProps) => {
   const activityId = ownProps.match.params.id;
@@ -59,7 +60,15 @@ class ActivityForm extends React.Component {
     if(this.state.event.id){
       this.props.updateActivity(this.state.event);
     } else {
-      this.props.createActivity(this.state.event);
+      // 为新建的活动添加头像和id
+      const newActivity = {
+        ...this.state.event,
+        id: cuid(),
+        hostPhotoURL: '/assets/user.png'
+      }
+      this.props.createActivity(newActivity);
+      // 创建新活动后，进行重定向到‘活动列表界面’
+      this.props.history.push('/activities');
     }
   }
 
