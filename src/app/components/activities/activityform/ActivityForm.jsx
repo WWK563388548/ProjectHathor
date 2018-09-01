@@ -84,7 +84,6 @@ class ActivityForm extends React.Component {
   
   render() {
     console.log(this.props);
-    const handleClose = this.props.onClick;
     // 使用'ref'获取值，代表uncontroled form
     return (
       <Segment>
