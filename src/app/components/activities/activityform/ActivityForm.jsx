@@ -3,6 +3,7 @@ import { Segment, Form, Button } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { createActivity, updateActivity } from '../activityActions';
 import cuid from 'cuid';
+import { reduxForm } from 'redux-form';
 
 const mapState = (state, ownProps) => {
   const activityId = ownProps.match.params.id;
@@ -118,4 +119,4 @@ class ActivityForm extends React.Component {
   }
 }
 
-export default connect(mapState, actions)(ActivityForm);
+export default connect(mapState, actions)(reduxForm({form: 'activityForm'})(ActivityForm));
