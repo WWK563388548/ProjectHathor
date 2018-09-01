@@ -1,6 +1,7 @@
 import React from 'react';
 import { Segment, Form, Button } from 'semantic-ui-react';
 import { connect } from 'react-redux';
+import { createActivity, updateActivity } from '../activityActions';
 
 const mapState = (state, ownProps) => {
   const activityId = ownProps.match.params.id;
@@ -19,6 +20,12 @@ const mapState = (state, ownProps) => {
   return {
     activity
   };
+}
+
+// actions 中的方法会加入到组件的props中
+const actions = {
+  createActivity,
+  updateActivity,
 }
 
 class ActivityForm extends React.Component {
@@ -101,4 +108,4 @@ class ActivityForm extends React.Component {
   }
 }
 
-export default connect(mapState)(ActivityForm);
+export default connect(mapState, actions)(ActivityForm);
