@@ -19,21 +19,24 @@ const  mapState = (state, ownProps) => {
     }
 
     // console.log(activity);
-    return activity;
+    return {
+        activity
+    };
 }
 
 // This is stateless functional component
-const ActivityDetailPage = (props) => {
-    // console.log(props);
+// activity = this.props.activity
+const ActivityDetailPage = ({activity}) => {
+    console.log(this.props);
     return (
         <Grid>
             <Grid.Column width={10}>
-                <DetailHeader activity={props}/>
-                <DetailInfo activity={props}/>
+                <DetailHeader activity={activity}/>
+                <DetailInfo activity={activity}/>
                 <DetailChat />
             </Grid.Column>
             <Grid.Column width={6}>
-                <DetailSideBar participants={props.participants}/>
+                <DetailSideBar participants={activity.participants}/>
             </Grid.Column>
         </Grid>
     );

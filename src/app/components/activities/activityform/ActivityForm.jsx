@@ -16,13 +16,15 @@ const mapState = (state, ownProps) => {
     activity = state.activities.filter(item => item.id === activityId)[0];
   }
 
-  return activity;
+  return {
+    activity
+  };
 }
 
 class ActivityForm extends React.Component {
   
   state = {
-    event: Object.assign({}, this.props),
+    event: Object.assign({}, this.props.activity),
   }
   
   /**
