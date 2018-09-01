@@ -59,6 +59,8 @@ class ActivityForm extends React.Component {
     // console.log(this.state.event);
     if(this.state.event.id){
       this.props.updateActivity(this.state.event);
+      // 返回上一个路径
+      this.props.history.goBack();
     } else {
       // 为新建的活动添加头像和id
       const newActivity = {
@@ -110,7 +112,7 @@ class ActivityForm extends React.Component {
           <Button positive type="submit">
             提交
           </Button>
-          <Button onClick={handleClose} type="button">取消</Button>
+          <Button onClick={this.props.history.goBack} type="button">取消</Button>
         </Form>
       </Segment>
     );
