@@ -1,9 +1,12 @@
 import React from 'react';
-import { Segment, Form, Button } from 'semantic-ui-react';
+import { Segment, Form, Button, Grid, Header } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { createActivity, updateActivity } from '../activityActions';
 import cuid from 'cuid';
-import { reduxForm } from 'redux-form';
+import { reduxForm, Field } from 'redux-form';
+import TextInput from '../../form/TextInput';
+import TextArea from '../../form/TextArea';
+import SelectInput from '../../form/SelectInput';
 
 const mapState = (state, ownProps) => {
   const activityId = ownProps.match.params.id;
@@ -30,11 +33,17 @@ const actions = {
   updateActivity,
 }
 
+const category = [
+  {key: 'party', text: 'Party', value: 'party'},
+  {key: 'culture', text: 'Culture', value: 'culture'},
+  {key: 'movie', text: 'Movie', value: 'movie'},
+  {key: 'food', text: 'Food', value: 'food'},
+  {key: 'music', text: 'Music', value: 'music'},
+  {key: 'travel', text: 'Travel', value: 'travel'},
+  {key: 'knowledge', text: 'Knowledge', value: 'knowledge'},
+];
+
 class ActivityForm extends React.Component {
-  
-  state = {
-    event: Object.assign({}, this.props.activity),
-  }
   
   /**
    * componentDidMount(){}: 
@@ -87,34 +96,26 @@ class ActivityForm extends React.Component {
     console.log(this.props);
     // 使用'ref'获取值，代表uncontroled form
     return (
-      <Segment>
-        <Form onSubmit={this.onFormSubmit}>
-          <Form.Field>
-            <label>活动主题</label>
-            <input name='title' onChange={this.onInputChange} value={this.state.event.title} placeholder="活动的主题" />
-          </Form.Field>
-          <Form.Field>
-            <label>活动日期</label>
-            <input name='date' onChange={this.onInputChange} value={this.state.event.date} type="date" placeholder="YYYY-MM-DD" />
-          </Form.Field>
-          <Form.Field>
-            <label>城市</label>
-            <input name='city' onChange={this.onInputChange} value={this.state.event.city} placeholder="活动所在城市" />
-          </Form.Field>
-          <Form.Field>
-            <label>地点</label>
-            <input name='location' onChange={this.onInputChange} value={this.state.event.location} placeholder="活动举办地点" />
-          </Form.Field>
-          <Form.Field>
-            <label>组织者</label>
-            <input name='hostedBy' onChange={this.onInputChange} value={this.state.event.hostedBy} placeholder="输入活动组织者的名字" />
-          </Form.Field>
-          <Button positive type="submit">
-            提交
-          </Button>
-          <Button onClick={this.props.history.goBack} type="button">取消</Button>
-        </Form>
-      </Segment>
+      <Grid.Column>
+        <Grid.Column width={10}>
+          <Segment>
+            <Header sub color="teal" content="活动信息" />
+            <Form onSubmit={this.onFormSubmit}>
+              <Field name='title' type='text' component={TextInput} placeholder="活动主题" />
+              <Field name='category' type='text' component={SelectInput} options={category} placeholder="选择活动的类型" />
+              <Field name='description' type='text' rows={6} component={TextArea} placeholder="活动介绍" />
+              <Header sub color="teal" content="活动位置信息" />
+              <Field name='city' type='text' component={TextInput} placeholder="所在地区" />
+              <Field name='location' type='text' component={TextInput} placeholder="具体地址" />
+              <Field name='date' type='text' component={TextInput} placeholder="日期" />
+              <Button positive type="submit">
+                提交
+              </Button>
+              <Button onClick={this.props.history.goBack} type="button">取消</Button>
+            </Form>
+          </Segment>
+        </Grid.Column>
+      </Grid.Column>
     );
   }
 }
