@@ -58,19 +58,20 @@ class ActivityForm extends React.Component {
     
   // }
 
-  onFormSubmit = (event) => {
-    event.preventDefault();
+  onFormSubmit = (values) => {
+    console.log(values);
     // console.log(this.state.event);
-    if(this.state.event.id){
-      this.props.updateActivity(this.state.event);
+    if(this.props.initialValues.id){
+      this.props.updateActivity(values);
       // 返回上一个路径
       this.props.history.goBack();
     } else {
       // 为新建的活动添加头像和id
       const newActivity = {
-        ...this.state.event,
+        ...values,
         id: cuid(),
-        hostPhotoURL: '/assets/user.png'
+        hostPhotoURL: '/assets/user.png',
+        hostedBy: 'Ken'
       }
       this.props.createActivity(newActivity);
       // 创建新活动后，进行重定向到‘活动列表界面’
@@ -94,7 +95,7 @@ class ActivityForm extends React.Component {
         <Grid.Column width={10}>
           <Segment>
             <Header sub color="teal" content="活动信息" />
-            <Form onSubmit={this.onFormSubmit}>
+            <Form onSubmit={this.props.handleSubmit(this.onFormSubmit)}>
               <Field name='title' type='text' component={TextInput} placeholder="活动主题" />
               <Field name='category' type='text' component={SelectInput} options={category} placeholder="选择活动的类型" />
               <Field name='description' type='text' rows={6} component={TextArea} placeholder="活动介绍" />
