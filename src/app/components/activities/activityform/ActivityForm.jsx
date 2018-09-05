@@ -10,20 +10,14 @@ import SelectInput from '../../form/SelectInput';
 
 const mapState = (state, ownProps) => {
   const activityId = ownProps.match.params.id;
-  let activity = {
-    title: '',
-    date: '',
-    city: '',
-    location: '',
-    hostedBy: '',
-  }
+  let activity = {};
 
   if(activityId && state.activities.length > 0) {
     activity = state.activities.filter(item => item.id === activityId)[0];
   }
 
   return {
-    activity
+    initialValues: activity
   };
 }
 
@@ -119,5 +113,5 @@ class ActivityForm extends React.Component {
     );
   }
 }
-
-export default connect(mapState, actions)(reduxForm({form: 'activityForm'})(ActivityForm));
+// "enableReinitialize" 允许我们在props发生改变后，重新初始化
+export default connect(mapState, actions)(reduxForm({form: 'activityForm', enableReinitialize: true })(ActivityForm));
