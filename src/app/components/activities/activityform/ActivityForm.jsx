@@ -8,6 +8,7 @@ import { reduxForm, Field } from 'redux-form';
 import TextInput from '../../form/TextInput';
 import TextArea from '../../form/TextArea';
 import SelectInput from '../../form/SelectInput';
+import DateInput from '../../form/DateInput';
 
 const mapState = (state, ownProps) => {
   const activityId = ownProps.match.params.id;
@@ -121,7 +122,13 @@ class ActivityForm extends React.Component {
               <Header sub color="teal" content="活动位置信息" />
               <Field name='city' type='text' component={TextInput} placeholder="所在地区" />
               <Field name='location' type='text' component={TextInput} placeholder="具体地址" />
-              <Field name='date' type='text' component={TextInput} placeholder="日期" />
+              <Field name='date'
+                type='text'
+                component={DateInput}
+                dateFormat="YYYY/MM/DD HH:mm"
+                timeFormat="HH:mm"
+                showTimeSelect
+                placeholder="活动开始的日期与时间" />
               <Button disabled={invalid || submitting || pristine} positive type="submit">
                 提交
               </Button>
