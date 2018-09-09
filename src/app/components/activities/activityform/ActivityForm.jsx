@@ -3,6 +3,7 @@ import { Segment, Form, Button, Grid, Header } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { createActivity, updateActivity } from '../activityActions';
 import cuid from 'cuid';
+import moment from 'moment';
 import { composeValidators, combineValidators, isRequired, hasLengthGreaterThan } from 'revalidate';
 import { reduxForm, Field } from 'redux-form';
 import TextInput from '../../form/TextInput';
@@ -52,6 +53,7 @@ const validate = combineValidators({
   )(),
   city: isRequired({message: '设置举办活动的地区'}),
   location: isRequired({message: '设置具体的活动地址'}),
+  date: isRequired({message: '请输入活动的日期与时间'})
 });
 
 class ActivityForm extends React.Component {
@@ -78,6 +80,7 @@ class ActivityForm extends React.Component {
   onFormSubmit = (values) => {
     console.log(values);
     // console.log(this.state.event);
+    values.date = moment(values.date).format();
     if(this.props.initialValues.id){
       this.props.updateActivity(values);
       // 返回上一个路径
@@ -111,7 +114,7 @@ class ActivityForm extends React.Component {
     const {pristine} = this.props;
     // 使用'ref'获取值，代表uncontroled form
     return (
-      <Grid.Column>
+      <Grid>
         <Grid.Column width={10}>
           <Segment>
             <Header sub color="teal" content="活动信息" />
@@ -125,7 +128,7 @@ class ActivityForm extends React.Component {
               <Field name='date'
                 type='text'
                 component={DateInput}
-                dateFormat="YYYY/MM/DD HH:mm"
+                dateFormat="YYYY-MM-DD HH:mm"
                 timeFormat="HH:mm"
                 showTimeSelect
                 placeholder="活动开始的日期与时间" />
@@ -136,7 +139,7 @@ class ActivityForm extends React.Component {
             </Form>
           </Segment>
         </Grid.Column>
-      </Grid.Column>
+      </Grid>
     );
   }
 }
