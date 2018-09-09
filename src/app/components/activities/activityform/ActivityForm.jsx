@@ -3,6 +3,7 @@ import { Segment, Form, Button, Grid, Header } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { createActivity, updateActivity } from '../activityActions';
 import cuid from 'cuid';
+import { composeValidators, combineValidators, isRequired, hasLengthGreaterThan } from 'revalidate';
 import { reduxForm, Field } from 'redux-form';
 import TextInput from '../../form/TextInput';
 import TextArea from '../../form/TextArea';
@@ -36,6 +37,21 @@ const category = [
   {key: 'travel', text: 'Travel', value: 'travel'},
   {key: 'knowledge', text: 'Knowledge', value: 'knowledge'},
 ];
+
+// 对每一个field设置确认(validation)
+const validate = combineValidators({
+  title: isRequired({message: '请设置活动主题/名称'}),
+  category: isRequired({message: '请设置活动类型'}),
+  // 这里要设置两个确认项
+  description: composeValidators(
+    isRequired({message: '请输入活动简介/描述'}),
+    hasLengthGreaterThan(10)({
+      message: '活动的简介/描述至少必须有10个字'
+    })
+  )(),
+  city: isRequired({message: '设置举办活动的地区'}),
+  location: isRequired({message: '设置具体的活动地址'}),
+});
 
 class ActivityForm extends React.Component {
   
@@ -89,6 +105,9 @@ class ActivityForm extends React.Component {
   
   render() {
     console.log(this.props);
+    const {invalid} = this.props;
+    const {submitting} = this.props;
+    const {pristine} = this.props;
     // 使用'ref'获取值，代表uncontroled form
     return (
       <Grid.Column>
@@ -103,7 +122,7 @@ class ActivityForm extends React.Component {
               <Field name='city' type='text' component={TextInput} placeholder="所在地区" />
               <Field name='location' type='text' component={TextInput} placeholder="具体地址" />
               <Field name='date' type='text' component={TextInput} placeholder="日期" />
-              <Button positive type="submit">
+              <Button disabled={invalid || submitting || pristine} positive type="submit">
                 提交
               </Button>
               <Button onClick={this.props.history.goBack} type="button">取消</Button>
@@ -115,4 +134,6 @@ class ActivityForm extends React.Component {
   }
 }
 // "enableReinitialize" 允许我们在props发生改变后，重新初始化
-export default connect(mapState, actions)(reduxForm({form: 'activityForm', enableReinitialize: true })(ActivityForm));
+export default connect(mapState, actions)(
+  reduxForm({form: 'activityForm', enableReinitialize: true, validate })(ActivityForm)
+);
