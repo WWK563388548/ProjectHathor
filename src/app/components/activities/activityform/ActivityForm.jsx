@@ -1,25 +1,26 @@
 import React from 'react';
-import { Segment, Form, Button } from 'semantic-ui-react';
+import { Segment, Form, Button, Grid, Header } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { createActivity, updateActivity } from '../activityActions';
 import cuid from 'cuid';
+import moment from 'moment';
+import { composeValidators, combineValidators, isRequired, hasLengthGreaterThan } from 'revalidate';
+import { reduxForm, Field } from 'redux-form';
+import TextInput from '../../form/TextInput';
+import TextArea from '../../form/TextArea';
+import SelectInput from '../../form/SelectInput';
+import DateInput from '../../form/DateInput';
 
 const mapState = (state, ownProps) => {
   const activityId = ownProps.match.params.id;
-  let activity = {
-    title: '',
-    date: '',
-    city: '',
-    location: '',
-    hostedBy: '',
-  }
+  let activity = {};
 
   if(activityId && state.activities.length > 0) {
     activity = state.activities.filter(item => item.id === activityId)[0];
   }
 
   return {
-    activity
+    initialValues: activity
   };
 }
 
@@ -29,11 +30,33 @@ const actions = {
   updateActivity,
 }
 
+const category = [
+  {key: 'party', text: 'Party', value: 'party'},
+  {key: 'culture', text: 'Culture', value: 'culture'},
+  {key: 'movie', text: 'Movie', value: 'movie'},
+  {key: 'food', text: 'Food', value: 'food'},
+  {key: 'music', text: 'Music', value: 'music'},
+  {key: 'travel', text: 'Travel', value: 'travel'},
+  {key: 'knowledge', text: 'Knowledge', value: 'knowledge'},
+];
+
+// 对每一个field设置确认(validation)
+const validate = combineValidators({
+  title: isRequired({message: '请设置活动主题/名称'}),
+  category: isRequired({message: '请设置活动类型'}),
+  // 这里要设置两个确认项
+  description: composeValidators(
+    isRequired({message: '请输入活动简介/描述'}),
+    hasLengthGreaterThan(10)({
+      message: '活动的简介/描述至少必须有10个字'
+    })
+  )(),
+  city: isRequired({message: '设置举办活动的地区'}),
+  location: isRequired({message: '设置具体的活动地址'}),
+  date: isRequired({message: '请输入活动的日期与时间'})
+});
+
 class ActivityForm extends React.Component {
-  
-  state = {
-    event: Object.assign({}, this.props.activity),
-  }
   
   /**
    * componentDidMount(){}: 
@@ -54,19 +77,21 @@ class ActivityForm extends React.Component {
     
   // }
 
-  onFormSubmit = (event) => {
-    event.preventDefault();
+  onFormSubmit = (values) => {
+    console.log(values);
     // console.log(this.state.event);
-    if(this.state.event.id){
-      this.props.updateActivity(this.state.event);
+    values.date = moment(values.date).format();
+    if(this.props.initialValues.id){
+      this.props.updateActivity(values);
       // 返回上一个路径
       this.props.history.goBack();
     } else {
       // 为新建的活动添加头像和id
       const newActivity = {
-        ...this.state.event,
+        ...values,
         id: cuid(),
-        hostPhotoURL: '/assets/user.png'
+        hostPhotoURL: '/assets/user.png',
+        hostedBy: 'Ken'
       }
       this.props.createActivity(newActivity);
       // 创建新活动后，进行重定向到‘活动列表界面’
@@ -84,38 +109,41 @@ class ActivityForm extends React.Component {
   
   render() {
     console.log(this.props);
+    const {invalid} = this.props;
+    const {submitting} = this.props;
+    const {pristine} = this.props;
     // 使用'ref'获取值，代表uncontroled form
     return (
-      <Segment>
-        <Form onSubmit={this.onFormSubmit}>
-          <Form.Field>
-            <label>活动主题</label>
-            <input name='title' onChange={this.onInputChange} value={this.state.event.title} placeholder="活动的主题" />
-          </Form.Field>
-          <Form.Field>
-            <label>活动日期</label>
-            <input name='date' onChange={this.onInputChange} value={this.state.event.date} type="date" placeholder="YYYY-MM-DD" />
-          </Form.Field>
-          <Form.Field>
-            <label>城市</label>
-            <input name='city' onChange={this.onInputChange} value={this.state.event.city} placeholder="活动所在城市" />
-          </Form.Field>
-          <Form.Field>
-            <label>地点</label>
-            <input name='location' onChange={this.onInputChange} value={this.state.event.location} placeholder="活动举办地点" />
-          </Form.Field>
-          <Form.Field>
-            <label>组织者</label>
-            <input name='hostedBy' onChange={this.onInputChange} value={this.state.event.hostedBy} placeholder="输入活动组织者的名字" />
-          </Form.Field>
-          <Button positive type="submit">
-            提交
-          </Button>
-          <Button onClick={this.props.history.goBack} type="button">取消</Button>
-        </Form>
-      </Segment>
+      <Grid>
+        <Grid.Column width={10}>
+          <Segment>
+            <Header sub color="teal" content="活动信息" />
+            <Form onSubmit={this.props.handleSubmit(this.onFormSubmit)}>
+              <Field name='title' type='text' component={TextInput} placeholder="活动主题" />
+              <Field name='category' type='text' component={SelectInput} options={category} placeholder="选择活动的类型" />
+              <Field name='description' type='text' rows={6} component={TextArea} placeholder="活动介绍" />
+              <Header sub color="teal" content="活动位置信息" />
+              <Field name='city' type='text' component={TextInput} placeholder="所在地区" />
+              <Field name='location' type='text' component={TextInput} placeholder="具体地址" />
+              <Field name='date'
+                type='text'
+                component={DateInput}
+                dateFormat="YYYY-MM-DD HH:mm"
+                timeFormat="HH:mm"
+                showTimeSelect
+                placeholder="活动开始的日期与时间" />
+              <Button disabled={invalid || submitting || pristine} positive type="submit">
+                提交
+              </Button>
+              <Button onClick={this.props.history.goBack} type="button">取消</Button>
+            </Form>
+          </Segment>
+        </Grid.Column>
+      </Grid>
     );
   }
 }
-
-export default connect(mapState, actions)(ActivityForm);
+// "enableReinitialize" 允许我们在props发生改变后，重新初始化
+export default connect(mapState, actions)(
+  reduxForm({form: 'activityForm', enableReinitialize: true, validate })(ActivityForm)
+);
