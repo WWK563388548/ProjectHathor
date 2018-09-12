@@ -10,6 +10,7 @@ import TextInput from '../../form/TextInput';
 import TextArea from '../../form/TextArea';
 import SelectInput from '../../form/SelectInput';
 import DateInput from '../../form/DateInput';
+import PlaceInput from '../../form/PlaceInput';
 
 const mapState = (state, ownProps) => {
   const activityId = ownProps.match.params.id;
@@ -123,7 +124,13 @@ class ActivityForm extends React.Component {
               <Field name='category' type='text' component={SelectInput} options={category} placeholder="选择活动的类型" />
               <Field name='description' type='text' rows={6} component={TextArea} placeholder="活动介绍" />
               <Header sub color="teal" content="活动位置信息" />
-              <Field name='city' type='text' component={TextInput} placeholder="所在地区" />
+              <Field
+                name='city'
+                type='text'
+                component={PlaceInput}
+                options={{types: ['(cities)']}}
+                placeholder="所在地区" 
+              />
               <Field name='location' type='text' component={TextInput} placeholder="具体地址" />
               <Field name='date'
                 type='text'
