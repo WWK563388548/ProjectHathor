@@ -131,7 +131,13 @@ class ActivityForm extends React.Component {
                 options={{types: ['(cities)']}}
                 placeholder="所在地区" 
               />
-              <Field name='location' type='text' component={TextInput} placeholder="具体地址" />
+              <Field
+                name='location'
+                type='text'
+                component={PlaceInput}
+                options={{types: ['(establishment)']}}
+                placeholder="具体地址" />
+
               <Field name='date'
                 type='text'
                 component={DateInput}
