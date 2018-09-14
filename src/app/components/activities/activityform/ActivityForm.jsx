@@ -1,9 +1,12 @@
+/* global google */
 import React from 'react';
 import { Segment, Form, Button, Grid, Header } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { createActivity, updateActivity } from '../activityActions';
 import cuid from 'cuid';
 import moment from 'moment';
+import { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
+import Script from 'react-load-script';
 import { composeValidators, combineValidators, isRequired, hasLengthGreaterThan } from 'revalidate';
 import { reduxForm, Field } from 'redux-form';
 import TextInput from '../../form/TextInput';
@@ -58,6 +61,33 @@ const validate = combineValidators({
 });
 
 class ActivityForm extends React.Component {
+
+  state = {
+    cityLatLng: {},
+    locationLatLng: {},
+    scriptLoaded: false, 
+  };
+
+  handleCitySelect = (selectedCity) => {
+    geocodeByAddress(selectedCity)
+      .then(results => {
+        console.log(results);
+        getLatLng(results);
+      })
+      .then(latLng => {
+        console.log(latLng);
+        this.setState({
+          cityLatLng: latLng
+        });
+      })
+      .then(() => {
+        this.props.change('city', selectedCity);
+      });
+  }
+
+  handleScriptLoaded = () => {
+    this.setState({scriptLoaded: true});
+  }
   
   /**
    * componentDidMount(){}: 
@@ -116,6 +146,10 @@ class ActivityForm extends React.Component {
     // 使用'ref'获取值，代表uncontroled form
     return (
       <Grid>
+        <Script
+          url="https://maps.googleapis.com/maps/api/js?key=API_KEY&libraries=places"
+          onLoad={this.handleScriptLoaded}
+        />
         <Grid.Column width={10}>
           <Segment>
             <Header sub color="teal" content="活动信息" />
@@ -130,13 +164,19 @@ class ActivityForm extends React.Component {
                 component={PlaceInput}
                 options={{types: ['(cities)']}}
                 placeholder="所在地区" 
+                onSelect={this.handleCitySelect}
               />
+              { this.state.scriptLoaded && 
               <Field
                 name='location'
                 type='text'
                 component={PlaceInput}
-                options={{types: ['(establishment)']}}
-                placeholder="具体地址" />
+                options={{
+                  location: new google.maps.LatLng(this.state.cityLatLng),
+                  radius: 1000,
+                  types: ['(establishment)']
+                }}
+                placeholder="具体地址" /> }
 
               <Field name='date'
                 type='text'
