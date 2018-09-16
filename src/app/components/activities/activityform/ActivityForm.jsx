@@ -86,6 +86,24 @@ class ActivityForm extends React.Component {
       });
   }
 
+  handleLocationSelect = (selectedLocation) => {
+    geocodeByAddress(selectedLocation)
+      .then(results => {
+        // console.log(results);
+        console.log(results[0]);
+        return getLatLng(results[0]);
+      })
+      .then(latLng => {
+        console.log(latLng);
+        this.setState({
+          locationLatLng: latLng
+        });
+      })
+      .then(() => {
+        this.props.change('location', selectedLocation);
+      });
+  }
+
   handleScriptLoaded = () => {
     this.setState({scriptLoaded: true});
   }
@@ -113,6 +131,7 @@ class ActivityForm extends React.Component {
     console.log(values);
     // console.log(this.state.event);
     values.date = moment(values.date).format();
+    values.locationLatLng = this.state.locationLatLng;
     if(this.props.initialValues.id){
       this.props.updateActivity(values);
       // 返回上一个路径
@@ -172,6 +191,7 @@ class ActivityForm extends React.Component {
                 name='location'
                 type='text'
                 component={PlaceInput}
+                onSelect={this.handleLocationSelect}
                 options={{
                   location: new google.maps.LatLng(this.state.cityLatLng),
                   radius: 10000,
