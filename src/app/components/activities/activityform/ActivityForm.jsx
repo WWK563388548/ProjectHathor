@@ -71,8 +71,9 @@ class ActivityForm extends React.Component {
   handleCitySelect = (selectedCity) => {
     geocodeByAddress(selectedCity)
       .then(results => {
-        console.log(results);
-        getLatLng(results);
+        // console.log(results);
+        console.log(results[0]);
+        return getLatLng(results[0]);
       })
       .then(latLng => {
         console.log(latLng);
@@ -173,8 +174,8 @@ class ActivityForm extends React.Component {
                 component={PlaceInput}
                 options={{
                   location: new google.maps.LatLng(this.state.cityLatLng),
-                  radius: 1000,
-                  types: ['(establishment)']
+                  radius: 10000,
+                  types: ['establishment']
                 }}
                 placeholder="具体地址" /> }
 
