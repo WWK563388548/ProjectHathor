@@ -6,7 +6,7 @@ const initialState = [
       id: '1',
       title: 'Flutter学习会',
       date: '2018-08-04',
-      category: 'knowledge',
+      category: 'culture',
       description:
         '学习如何使用Dart与Flutter开发跨平台的移动应用',
       city: '东京, 日本',
