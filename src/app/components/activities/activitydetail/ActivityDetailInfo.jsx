@@ -1,7 +1,18 @@
 import React from 'react';
 import { Segment, Grid, Icon, Button } from 'semantic-ui-react';
+import ActivityDetailMap from './ActivityDetailMap';
 
 class ActiivityDetailInfo extends React.Component {
+
+    state = {
+        showMap: false,
+    }
+
+    showMapHandler = () => {
+        this.setState(preState => ({
+            showMap: !preState.showMap,
+        }));
+    }
     
     render() {
         const activity = this.props.activity;
@@ -36,10 +47,16 @@ class ActiivityDetailInfo extends React.Component {
                             <span>{activity.location}</span>
                         </Grid.Column>
                         <Grid.Column width={4}>
-                            <Button color="teal" size="tiny" content="查看地图" />
+                            <Button 
+                            onClick={this.showMapHandler} 
+                            color="teal" size="tiny" 
+                            content={this.state.showMap ? "隐藏地图" : "显示地图"} />
                         </Grid.Column>
                     </Grid>
                 </Segment>
+                {this.state.showMap && (
+                    <ActivityDetailMap lat={activity.locationLatLng.lat} lng={activity.locationLatLng.lng}/>
+                )}
             </Segment.Group>
         );
     }
