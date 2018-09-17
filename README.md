@@ -1,6 +1,6 @@
 # Project Hathor(聚乐)
-  
-This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app). <br>
+
+This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app) and [Semantic-UI-React](http://react.semantic-ui.com/theming/). <br>
 Follow the steps below to build and run this web application: 
 <br>
 * Get API key of `Maps JavaScript API`, `Geocoding API`, `Places API` of Google
