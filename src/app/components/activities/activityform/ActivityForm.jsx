@@ -14,7 +14,6 @@ import TextArea from '../../form/TextArea';
 import SelectInput from '../../form/SelectInput';
 import DateInput from '../../form/DateInput';
 import PlaceInput from '../../form/PlaceInput';
-import { openModal } from '../../modals/modalActions';
 
 const mapState = (state, ownProps) => {
   const activityId = ownProps.match.params.id;
@@ -33,7 +32,6 @@ const mapState = (state, ownProps) => {
 const actions = {
   createActivity,
   updateActivity,
-  openModal
 }
 
 const category = [
@@ -191,7 +189,6 @@ class ActivityForm extends React.Component {
                 提交
               </Button>
               <Button onClick={this.props.history.goBack} type="button">取消</Button>
-              <Button onClick={() => this.props.openModal('testModal', {data: 43})} color="teal" type="button">Open Modal</Button>
             </Form>
           </Segment>
         </Grid.Column>
