@@ -5,7 +5,7 @@ const SignOutMenu = (props) => {
     return (
         <Menu.Item position="right">
             <Button onClick={props.signIn} basic inverted content="登陆"/>
-            <Button basic inverted content="注册" style={{marginLeft: '0.5em'}}/>
+            <Button onClick={props.register} basic inverted content="注册" style={{marginLeft: '0.5em'}}/>
         </Menu.Item>
     );
 }

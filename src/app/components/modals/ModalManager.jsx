@@ -1,9 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import testModal from './testModal';
+import LoginModal from './LoginModal';
+import RegisterModal from './RegisterModal';
 
 const modalLookup = {
-    testModal
+    testModal,
+    LoginModal,
+    RegisterModal
 }
 
 const mapState = (state) => ({

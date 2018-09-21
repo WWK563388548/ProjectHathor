@@ -1,9 +1,15 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Menu, Container, Button } from 'semantic-ui-react';
 // 'withRouter' 基本上就是一个函数，它使一个组件返回到另一个组件
 import { NavLink, Link, withRouter } from 'react-router-dom';
 import SignOutMenu from './SignOutMenu';
 import SignInMenu from './SignInMenu';
+import { openModal } from '../../modals/modalActions';
+
+const actions = {
+    openModal,
+};
 
 class NavBar extends React.Component {
 
@@ -12,10 +18,13 @@ class NavBar extends React.Component {
     }
 
     handleSignIn = () => {
-        this.setState({
-            authenticated: true,
-        });
+        this.props.openModal('LoginModal');
     }
+
+    handleRegister = () => {
+        this.props.openModal('RegisterModal');
+    }
+
 
     handleSignOut = () => {
         this.setState({
@@ -46,7 +55,7 @@ class NavBar extends React.Component {
                     { isAuth ? (
                         <SignInMenu signOut={this.handleSignOut} />
                     ) : (
-                        <SignOutMenu signIn={this.handleSignIn} />
+                        <SignOutMenu signIn={this.handleSignIn} register={this.handleRegister} />
                     )}
                 </Container>
             </Menu>
@@ -54,4 +63,4 @@ class NavBar extends React.Component {
     }
 }
 // 使用'withRouter'
-export default withRouter(NavBar);
+export default withRouter(connect(null, actions)(NavBar));
