@@ -9,6 +9,7 @@ import UserDetailPage from '../components/user/userdetail/UserDetailPage';
 import SettingsDashBoard from '../components/user/settings/SettingsDashBoard';
 import ActivityForm from '../components/activities/activityform/ActivityForm';
 import HomePage from '../components/home/HomePage';
+import ModalManager from '../components/modals/ModalManager';
 
 /**
 *  <Switch>是唯一的因为它仅仅只会渲染一个(相匹配的)路径。
@@ -20,6 +21,7 @@ class App extends Component {
   render() {
     return (
       <div>
+        <ModalManager />
         <Switch>
           {
             // exact：严格匹配路由，使‘／’与‘／xxx’不匹配
