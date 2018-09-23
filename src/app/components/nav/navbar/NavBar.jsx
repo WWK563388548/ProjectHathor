@@ -6,16 +6,18 @@ import { NavLink, Link, withRouter } from 'react-router-dom';
 import SignOutMenu from './SignOutMenu';
 import SignInMenu from './SignInMenu';
 import { openModal } from '../../modals/modalActions';
+import { signout } from '../../auth/authActions';
 
 const actions = {
     openModal,
+    signout
 };
 
-class NavBar extends React.Component {
+const mapState = (state) => ({
+    auth: state.auth
+})
 
-    state = {
-        authenticated: false,
-    }
+class NavBar extends React.Component {
 
     handleSignIn = () => {
         this.props.openModal('LoginModal');
@@ -27,14 +29,13 @@ class NavBar extends React.Component {
 
 
     handleSignOut = () => {
-        this.setState({
-            authenticated: false,
-        });
+        this.props.signout();
         this.props.history.push('/');
     }
 
     render() {
-        const isAuth = this.state.authenticated;
+        const isAuth = this.props.auth;
+        const authenticated = isAuth.authenticated;
         return (
             <Menu inverted fixed="top">
                 <Container>
@@ -43,8 +44,8 @@ class NavBar extends React.Component {
                         聚乐
                     </Menu.Item>
                     <Menu.Item name="活动列表" as={NavLink} to='/activities' />
-                    { isAuth && <Menu.Item name="用户" as={NavLink} to='/people' /> }
-                    {isAuth && (
+                    { authenticated && <Menu.Item name="用户" as={NavLink} to='/people' /> }
+                    { authenticated && (
                         <Menu.Item>
                             <Button as={Link} to='/createActivity' floated="right" positive inverted content="创建新活动"/>
                         </Menu.Item>
@@ -52,8 +53,8 @@ class NavBar extends React.Component {
                     {
                         // 若登陆显示<SignInMenu />, 反之则显示<SignOutMenu />
                     }
-                    { isAuth ? (
-                        <SignInMenu signOut={this.handleSignOut} />
+                    { authenticated ? (
+                        <SignInMenu currentUser={isAuth.currentUser} signOut={this.handleSignOut} />
                     ) : (
                         <SignOutMenu signIn={this.handleSignIn} register={this.handleRegister} />
                     )}
@@ -63,4 +64,4 @@ class NavBar extends React.Component {
     }
 }
 // 使用'withRouter'
-export default withRouter(connect(null, actions)(NavBar));
+export default withRouter(connect(mapState, actions)(NavBar));
