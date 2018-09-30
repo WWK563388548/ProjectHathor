@@ -3,7 +3,7 @@ const sampleData = {
         {
           id: '1',
           title: 'Flutter学习会',
-          date: '2018-08-04',
+          date: '2018-08-04T18:00:00',
           category: 'culture',
           description:
             '学习如何使用Dart与Flutter开发跨平台的移动应用',
@@ -31,7 +31,7 @@ const sampleData = {
         {
           id: '2',
           title: '挑战富士山',
-          date: '2018-08-15',
+          date: '2018-08-15T18:00:00',
           category: 'travel',
           description:
             '找伙伴去爬富士山，下山后也想去富士急',
