@@ -3,9 +3,11 @@ import { connect } from 'react-redux';
 import ActivityList from '../activitylist/ActivityList';
 import { Grid } from 'semantic-ui-react';
 import { deleteActivity } from '../activityActions'
+import LoadingComponent from '../../util/loadingComponent';
 
 const mapState = (state) => ({
-  activities: state.activities
+  activities: state.activities,
+  loading: state.async.loading,
 });
 
 const actions = {
@@ -19,6 +21,11 @@ class DashBoard extends React.Component {
   }
 
   render() {
+
+    if(this.props.loading){
+      return <LoadingComponent inverted={true} />
+    }
+
     return (
       <Grid>
         <Grid.Column width={10}>
