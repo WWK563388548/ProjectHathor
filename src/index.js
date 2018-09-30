@@ -8,8 +8,11 @@ import { configureStore } from './app/components/store/configurationStore'
 import App from './app/layout/App';
 import registerServiceWorker from './registerServiceWorker';
 import ScrollToTop from './app/components/util/ScrollToTop';
+import { loadActivities } from './app/components/activities/activityActions';
 
 const store = configureStore();
+store.dispatch(loadActivities());
+
 ReactDOM.render(
     <Provider store={store}>
         <BrowserRouter>

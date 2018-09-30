@@ -1,4 +1,4 @@
-import { CREATE_ACTIVITY, UPDATE_ACTIVITY, DELETE_ACTIVITY } from './activityConstants';
+import { CREATE_ACTIVITY, UPDATE_ACTIVITY, DELETE_ACTIVITY, FETCH_ACTIVITY } from './activityConstants';
 
 // Fake data
 const initialState = [];
@@ -16,6 +16,8 @@ const initialState = [];
             return [
                 ...state.filter(event => event.id !== action.payload.activityId)
             ];
+        case FETCH_ACTIVITY: 
+            return action.payload.activities;
         default:
             return state;
       }
