@@ -4,6 +4,7 @@ import ActivityList from '../activitylist/ActivityList';
 import { Grid } from 'semantic-ui-react';
 import { deleteActivity } from '../activityActions'
 import LoadingComponent from '../../util/loadingComponent';
+import RecentActivity from './RecentActivity';
 
 const mapState = (state) => ({
   activities: state.activities,
@@ -34,6 +35,7 @@ class DashBoard extends React.Component {
           activities={this.props.activities} />
         </Grid.Column>
         <Grid.Column width={6}>
+          <RecentActivity />
         </Grid.Column>
       </Grid>
     );
