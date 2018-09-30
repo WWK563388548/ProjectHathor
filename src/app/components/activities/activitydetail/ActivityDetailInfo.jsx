@@ -1,6 +1,8 @@
 import React from 'react';
 import { Segment, Grid, Icon, Button } from 'semantic-ui-react';
 import ActivityDetailMap from './ActivityDetailMap';
+import format from 'date-fns/format';
+import chineseLocale from 'date-fns/locale/zh_cn';
 
 class ActiivityDetailInfo extends React.Component {
 
@@ -34,7 +36,7 @@ class ActiivityDetailInfo extends React.Component {
                             <Icon name="calendar" size="large" color="teal" />
                         </Grid.Column>
                         <Grid.Column width={15}>
-                            <span>{activity.date}</span>
+                            <span>{format(activity.date, 'YYYY MMMM do dddd', {locale: chineseLocale})} - {format(activity.date, 'HH:mm A', {locale: chineseLocale})}</span>
                         </Grid.Column>
                     </Grid>
                 </Segment>

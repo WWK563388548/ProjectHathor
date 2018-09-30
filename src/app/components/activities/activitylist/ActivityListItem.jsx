@@ -2,6 +2,8 @@ import React from 'react';
 import ActivityListParticipant from './ActivityListParticipant';
 import { Segment, Item, Icon, List, Button } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
+import format from 'date-fns/format';
+import chineseLocale from 'date-fns/locale/zh_cn';
 
 class ActivityListItem extends React.Component {
     render() {
@@ -28,7 +30,7 @@ class ActivityListItem extends React.Component {
 
                 <Segment>   
                     <span>
-                        <Icon name="clock" /> {activityItemData.date} |
+                        <Icon name="clock" /> {format(activityItemData.date, 'YYYY MMMM do dddd', {locale: chineseLocale})} - {format(activityItemData.date, 'HH:mm A', {locale: chineseLocale})} |
                         <Icon name="marker" /> {activityItemData.location}
                     </span>
                 </Segment>

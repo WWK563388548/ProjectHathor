@@ -1,6 +1,8 @@
 import React from 'react';
 import { Segment, Image, Item, Header, Button } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
+import format from 'date-fns/format';
+import chineseLocale from 'date-fns/locale/zh_cn';
 
 class ActiivityDetailHeader extends React.Component {
 
@@ -34,7 +36,7 @@ class ActiivityDetailHeader extends React.Component {
                                         content={activity.title}
                                         style={{ color: 'white' }}
                                     />
-                                    <p>{activity.date}</p>
+                                    <p>{format(activity.date, 'YYYY MMMM do dddd', {locale: chineseLocale})} - {format(activity.date, 'HH:mm A', {locale: chineseLocale})}</p>
                                     <p>
                                         举办者: <strong>{activity.hostedBy}</strong>
                                     </p>
