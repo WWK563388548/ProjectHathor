@@ -5,9 +5,11 @@ import { Grid } from 'semantic-ui-react';
 import { deleteActivity } from '../activityActions'
 import LoadingComponent from '../../util/loadingComponent';
 import RecentActivity from './RecentActivity';
+import { firestoreConnect } from 'react-redux-firebase';
 
 const mapState = (state) => ({
-  activities: state.activities,
+  // activities: state.activities,
+  activities: state.firestore.ordered.activities,
   loading: state.async.loading,
 });
 
@@ -42,4 +44,4 @@ class DashBoard extends React.Component {
   }
 }
 
-export default connect(mapState, actions)(DashBoard);
+export default connect(mapState, actions)(firestoreConnect([{collection: 'activities'}])(DashBoard));

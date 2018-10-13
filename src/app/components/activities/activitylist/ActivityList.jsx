@@ -7,7 +7,7 @@ class ActivityList extends React.Component {
         const deleteActivity = this.props.deleteActivity;
         return (
             <div>
-                {activities.map(item => {
+                {activities && activities.map(item => {
                     return <ActivityListItem 
                             key={item.id} 
                             activity={item} 

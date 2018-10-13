@@ -40,8 +40,9 @@ class ActivityListItem extends React.Component {
                         {
                             /* 判断参与者数组是否为空 */
                         }
-                        {activityItemData.participants && activityItemData.participants.map( item => {
-                            return <ActivityListParticipant key={item.id} participant={item} />;
+                        {activityItemData.participants && 
+                            Object.values(activityItemData.participants).map( (item, index) => {
+                            return <ActivityListParticipant key={index} participant={item} />;
                         })}
                     </List>
                 </Segment>
