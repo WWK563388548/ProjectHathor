@@ -30,7 +30,7 @@ class ActivityListItem extends React.Component {
 
                 <Segment>   
                     <span>
-                        <Icon name="clock" /> {format(activityItemData.date, 'YYYY MMMM do dddd', {locale: chineseLocale})} - {format(activityItemData.date, 'HH:mm A', {locale: chineseLocale})} |
+                        <Icon name="clock" /> {format(activityItemData.date.toDate(), 'YYYY MMMM do dddd', {locale: chineseLocale})} - {format(activityItemData.date.toDate(), 'HH:mm A', {locale: chineseLocale})} |
                         <Icon name="marker" /> {activityItemData.location}
                     </span>
                 </Segment>
