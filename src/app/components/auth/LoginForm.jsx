@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Form, Segment, Button } from 'semantic-ui-react';
+import { Form, Segment, Button, Label } from 'semantic-ui-react';
 import { Field, reduxForm } from 'redux-form';
 import TextInput from '../form/TextInput';
 import { login } from './authActions';
@@ -11,10 +11,14 @@ const actions = {
 
 const LoginForm = (props) => {
     console.log("login form props: ", props);
+    const styleOfLabel = {
+        backgroundColor: '#fff',
+    };
     const {handleSubmit} = props;
     const {login} = props;
+    const {error} = props;
     return (
-        <Form error size="large" onSubmit={handleSubmit(login)}>
+        <Form size="large" onSubmit={handleSubmit(login)}>
             <Segment>
                 <Field
                 name="email"
@@ -28,6 +32,9 @@ const LoginForm = (props) => {
                 type="password"
                 placeholder="密码"
                 />
+                {error &&
+                    <Label style={styleOfLabel} pointing color='red' >{error}</Label>
+                }
                 <Button fluid size="large" color="teal">
                 登陆
                 </Button>
