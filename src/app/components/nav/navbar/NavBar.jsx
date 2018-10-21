@@ -6,12 +6,12 @@ import { NavLink, Link, withRouter } from 'react-router-dom';
 import SignOutMenu from './SignOutMenu';
 import SignInMenu from './SignInMenu';
 import { openModal } from '../../modals/modalActions';
-import { signout } from '../../auth/authActions';
+// import { signout } from '../../auth/authActions';
 import { withFirebase } from 'react-redux-firebase';
 
 const actions = {
     openModal,
-    signout
+    // signout
 };
 
 const mapState = (state) => ({
