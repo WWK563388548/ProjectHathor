@@ -35,8 +35,9 @@ export const registerUser = (user) =>
             // create a new profile in firestore
             let newUser = {
                 displayName: user.displayName,
-                // createdAt: firebase.firestore.FieldValue.serverTimeStamp(),
+                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
             }
+            console.log("newUser", newUser);
             await firestore.set(`users/${newFirebaseUser.uid}`, {...newUser});
             console.log("newFirebaseUser", newFirebaseUser);
             dispatch(closeModal());
