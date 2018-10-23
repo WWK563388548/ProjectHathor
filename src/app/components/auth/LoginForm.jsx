@@ -3,11 +3,12 @@ import { connect } from 'react-redux';
 import { Form, Segment, Button, Label, Divider } from 'semantic-ui-react';
 import { Field, reduxForm } from 'redux-form';
 import TextInput from '../form/TextInput';
-import { login } from './authActions';
+import { login, socialLogin } from './authActions';
 import SocialLogin from './SocialLogin';
 
 const actions = {
-    login
+    login,
+    socialLogin
 }
 
 const LoginForm = (props) => {
@@ -18,6 +19,7 @@ const LoginForm = (props) => {
     const {handleSubmit} = props;
     const {login} = props;
     const {error} = props;
+    const {socialLogin} = props;
     return (
         <Form size="large" onSubmit={handleSubmit(login)}>
             <Segment>
@@ -42,7 +44,7 @@ const LoginForm = (props) => {
                 <Divider horizontal>
                   Or
                 </Divider>
-                <SocialLogin />
+                <SocialLogin socialLogin={socialLogin} />
             </Segment>
         </Form>
     );
