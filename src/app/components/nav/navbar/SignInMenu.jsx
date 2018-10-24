@@ -5,8 +5,12 @@ import { Link } from 'react-router-dom';
 const SignInMenu = (props) => {
     return (
         <Menu.Item position="right">
-          <Image avatar spaced="right" src='/assets/user.png' />
-          <Dropdown pointing="top left" text={props.auth.email}>
+          <Image 
+            avatar 
+            spaced="right" 
+            src={ props.auth.photoURL || '/assets/user.png' } 
+          />
+          <Dropdown pointing="top left" text={props.auth.displayName}>
             <Dropdown.Menu>
               <Dropdown.Item text="创建新活动" icon="plus" />
               <Dropdown.Item text="我的活动" icon="calendar" />

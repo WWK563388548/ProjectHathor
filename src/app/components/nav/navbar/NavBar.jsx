@@ -15,7 +15,7 @@ const actions = {
 };
 
 const mapState = (state) => ({
-    auth: state.firebase.auth
+    auth: state.firebase.auth,
 })
 
 class NavBar extends React.Component {
@@ -36,7 +36,7 @@ class NavBar extends React.Component {
 
     render() {
         const isAuth = this.props.auth;
-        console.log("navbar auth: ", isAuth);
+        console.log("Navbar props", this.props)
         const authenticated = isAuth.isLoaded && !isAuth.isEmpty;
         return (
             <Menu inverted fixed="top">
