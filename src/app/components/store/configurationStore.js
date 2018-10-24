@@ -10,6 +10,7 @@ const reactReduxFirebaseConfig = {
     userProfile: 'users',
     attachAuthIsReady: true,
     userFirestoreForProfile: true,
+    updateProfileOnLogin: false,
 }
 
  export const configureStore = (preloadedState) => {
