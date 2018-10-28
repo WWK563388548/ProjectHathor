@@ -1,6 +1,7 @@
 // import { SIGN_OUT_USER } from './authConstants';
 import { closeModal } from '../modals/modalActions';
-import { SubmissionError } from 'redux-form';
+import { SubmissionError, reset } from 'redux-form';
+import { toastr } from 'react-redux-toastr';
 
 export const login = (creds) => {
     return async (dispatch, getState, {getFirebase}) => {
@@ -69,5 +70,22 @@ export const registerUser = (user) =>
                 console.log(user);
             } catch (error) {
                 console.log(error);
+            }
+        };
+
+    export const updatePassword = (creds) => 
+        async (dispatch, getState, {getFirebase}) => {
+            const firebase = getFirebase();
+            const user = firebase.auth().currentUser;
+            console.log("action_user", user);
+            try {
+                await user.updatePassword(creds.newPassword1);
+                console.log("action_password", creds);
+                await dispatch(reset('account'));
+                toastr.success('Success', '您已经成功修改密码');
+            } catch (error) {
+                throw new SubmissionError({
+                    _error: error.message,
+                });
             }
         };
