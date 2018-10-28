@@ -17,12 +17,15 @@ const AccountPage = (props) => {
     const styleOfLabel = {
         backgroundColor: '#fff',
     };
+    console.log(props);
+    const {handleSubmit} = props;
+    const {updatePassword} = props;
     return (
         <Segment>
             <Header dividing size="large" content="我的账户" />
             <div>
                 <Header color="teal" sub content="修改密码" />
-                <Form>
+                <Form onSubmit={handleSubmit(updatePassword)}>
                     <Field
                         width={8}
                         name="newPassword1"
@@ -44,7 +47,7 @@ const AccountPage = (props) => {
                         placeholder="Confirm Password"
                     />
                     {props.error && (
-                        <Label style={styleOfLabel} basic color="red">
+                        <Label style={styleOfLabel} color="red">
                             {props.error}
                         </Label>
                     )}
