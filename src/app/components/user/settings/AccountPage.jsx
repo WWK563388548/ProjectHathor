@@ -20,9 +20,11 @@ const AccountPage = (props) => {
     console.log(props);
     const {handleSubmit} = props;
     const {updatePassword} = props;
+    const {providerId} = props;
     return (
         <Segment>
             <Header dividing size="large" content="我的账户" />
+            { providerId && providerId === 'password' && 
             <div>
                 <Header color="teal" sub content="修改密码" />
                 <Form onSubmit={handleSubmit(updatePassword)}>
@@ -54,7 +56,9 @@ const AccountPage = (props) => {
                     <Divider />
                     <Button disabled={props.invalid || props.submitting} size="large" positive content="Update Password" />
                 </Form>
-            </div>
+            </div>}
+
+            { providerId && providerId === 'facebook.com' && 
             <div style={{
                 marginTop: '20px',
             }}>
@@ -65,8 +69,9 @@ const AccountPage = (props) => {
                     <Icon name="facebook" />
                     前往Facebook
                 </Button>
-            </div>
+            </div>}
 
+            { providerId && providerId === 'google.com' && 
             <div style={{
                 marginTop: '20px',
             }}>
@@ -77,7 +82,7 @@ const AccountPage = (props) => {
                     <Icon name="google plus" />
                     前往Google
                 </Button>
-            </div>
+            </div>}
         </Segment>
     );
 };

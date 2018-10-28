@@ -15,15 +15,21 @@ import { loadActivities } from './app/components/activities/activityActions';
 const store = configureStore();
 store.dispatch(loadActivities());
 
-ReactDOM.render(
-    <Provider store={store}>
-        <BrowserRouter>
-            <ScrollToTop>
-                <ReduxToastr position="bottom-right" transitionIn="fadeIn" transitionOut="fadeOut" /> 
-                <App />
-            </ScrollToTop>
-        </BrowserRouter>
-    </Provider>,
-    document.getElementById('root')
-);
+let render = () => {
+    ReactDOM.render(
+        <Provider store={store}>
+            <BrowserRouter>
+                <ScrollToTop>
+                    <ReduxToastr position="bottom-right" transitionIn="fadeIn" transitionOut="fadeOut" /> 
+                    <App />
+                </ScrollToTop>
+            </BrowserRouter>
+        </Provider>,
+        document.getElementById('root')
+    );
+}
+
+store.firebaseAuthIsReady.then(() => {
+    render();
+});
 registerServiceWorker();

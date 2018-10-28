@@ -13,6 +13,10 @@ const actions = {
     updatePassword
 };
 
+const mapState = (state) => ({
+    providerId: state.firebase.auth.providerData[0].providerId,
+});
+
 // This is stateless functional component
 const SettingsDashBoard = (props) => {
     return (
@@ -31,7 +35,7 @@ const SettingsDashBoard = (props) => {
                     }
                     <Route 
                         path='/settings/account' 
-                        render={() => <AccountPage updatePassword={props.updatePassword} />} />
+                        render={() => <AccountPage updatePassword={props.updatePassword} providerId={props.providerId} />} />
                 </Switch>
             </Grid.Column>
             <Grid.Column width={4}>
@@ -41,4 +45,4 @@ const SettingsDashBoard = (props) => {
     );
 }
 
-export default connect(null, actions)(SettingsDashBoard);
+export default connect(mapState, actions)(SettingsDashBoard);
