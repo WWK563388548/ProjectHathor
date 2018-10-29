@@ -15,10 +15,13 @@ const actions = {
 
 const mapState = (state) => ({
     providerId: state.firebase.auth.providerData[0].providerId,
+    user: state.firebase.auth,
+    state: state,
 });
 
 // This is stateless functional component
 const SettingsDashBoard = (props) => {
+    console.log(props);
     return (
         <Grid>
             <Grid.Column width={12}>
@@ -27,7 +30,9 @@ const SettingsDashBoard = (props) => {
                         // 如果是'/settings'的情况下，总是重定向到'/settings/basic'页面
                     }
                     <Redirect exact from='/settings' to='/settings/basic'/>
-                    <Route path='/settings/basic' component={BasicPage} />
+                    <Route 
+                        path='/settings/basic'
+                        render={() => <BasicPage initialValues={props.user}/>} />
                     <Route path='/settings/about' component={AboutPage} />
                     <Route path='/settings/photos' component={PhotosPage} />
                     {
