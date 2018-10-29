@@ -14,7 +14,7 @@ class BasicsPage extends Component {
         console.log(this.props);
         return (
             <Segment>
-                <Header dividing size='large' content='Basics' />
+                <Header dividing size='large' content='个人信息' />
                 <Form>
                     <Field
                         width={8}
