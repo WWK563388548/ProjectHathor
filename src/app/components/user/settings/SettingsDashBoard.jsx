@@ -8,14 +8,16 @@ import AboutPage from './AboutPage';
 import PhotosPage from './PhotosPage';
 import AccountPage from './AccountPage';
 import { updatePassword } from '../../auth/authActions';
+import { updateProfile } from './../userAction';
 
 const actions = {
-    updatePassword
+    updatePassword,
+    updateProfile
 };
 
 const mapState = (state) => ({
     providerId: state.firebase.auth.providerData[0].providerId,
-    user: state.firebase.auth,
+    user: typeof state.firebase.profile.displayName === 'undefined' ? state.firebase.auth : state.firebase.profile,
     state: state,
 });
 
@@ -32,7 +34,7 @@ const SettingsDashBoard = (props) => {
                     <Redirect exact from='/settings' to='/settings/basic'/>
                     <Route 
                         path='/settings/basic'
-                        render={() => <BasicPage initialValues={props.user}/>} />
+                        render={() => <BasicPage updateProfile={props.updateProfile} initialValues={props.user}/>} />
                     <Route path='/settings/about' component={AboutPage} />
                     <Route path='/settings/photos' component={PhotosPage} />
                     {

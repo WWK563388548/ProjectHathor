@@ -10,12 +10,12 @@ import moment from 'moment';
 class BasicsPage extends Component {
 
     render() {
-        const {pristine, submitting} = this.props;
+        const {pristine, submitting, handleSubmit, updateProfile} = this.props;
         console.log(this.props);
         return (
             <Segment>
                 <Header dividing size='large' content='个人信息' />
-                <Form>
+                <Form onSubmit={handleSubmit(updateProfile)}>
                     <Field
                         width={8}
                         name='displayName'
