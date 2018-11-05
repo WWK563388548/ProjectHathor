@@ -35,7 +35,9 @@ const SettingsDashBoard = (props) => {
                     <Route 
                         path='/settings/basic'
                         render={() => <BasicPage updateProfile={props.updateProfile} initialValues={props.user}/>} />
-                    <Route path='/settings/about' component={AboutPage} />
+                    <Route 
+                        path='/settings/about' 
+                        render={() => <AboutPage updateProfile={props.updateProfile} initialValues={props.user} />} />
                     <Route path='/settings/photos' component={PhotosPage} />
                     {
                         // 通过<Route>来传递props
