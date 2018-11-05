@@ -7,4 +7,5 @@ Follow the steps below to build and run this web application:
 * Clone/download this project in your computer.
 * Install modules `npm install`
 * Add your API key to `PlaceInput.jsx`, `ActivityForm.jsx` and `ActivityDetailMap.jsx`
+* Set firebase config file up in `app/config/firebase.js`
 * Run application by command `npm start`
