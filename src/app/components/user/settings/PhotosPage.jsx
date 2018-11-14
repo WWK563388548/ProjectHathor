@@ -7,6 +7,7 @@ class PhotosPage extends Component {
     state = {
         files: [],
         fileName: '',
+        preview: '',
     }
 
     onDrop = (files) => {
@@ -14,10 +15,13 @@ class PhotosPage extends Component {
         this.setState({
             files,
             fileName: files[0].name,
+            preview: window.URL.createObjectURL(files[0]),
         });
+        // console.log(this.state.files[0].preview);
     }
 
     render() {
+        console.log(this.state);
         const style = {
             paddingTop: "30px",
             textAlign: "center",
@@ -29,7 +33,7 @@ class PhotosPage extends Component {
                     <Grid.Row />
                     <Grid.Column width={4}>
                         <Header color='teal' sub content='第一步 - 添加图片'/>
-                        <Dropzone onDrop={this.onDrop} multiple={false} >
+                        <Dropzone onDrop={this.onDrop.bind(this)} multiple={false} >
                             <div style={style}>
                                 <Icon name="upload" size="huge"/>
                                 <h3>将图片拖至此处或点击添加图片</h3>
@@ -43,6 +47,16 @@ class PhotosPage extends Component {
                     <Grid.Column width={1} />
                     <Grid.Column width={4}>
                         <Header sub color='teal' content='第三步 - 预览与上传图片' />
+                        {this.state.files[0] &&
+                            <img 
+                                style={{
+                                    minHeight: "200px",
+                                    minWidth: "200px",
+                                }} 
+                                src={this.state.preview}
+                                alt="image"
+                            />
+                        }
                     </Grid.Column>
 
                 </Grid>
