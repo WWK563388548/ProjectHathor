@@ -1,8 +1,27 @@
 import React, {Component} from 'react';
-import {Image, Segment, Header, Divider, Grid, Button, Card} from 'semantic-ui-react';
+import {Image, Segment, Header, Divider, Grid, Button, Card, Icon} from 'semantic-ui-react';
+import Dropzone from 'react-dropzone';
 
 class PhotosPage extends Component {
+
+    state = {
+        files: [],
+        fileName: '',
+    }
+
+    onDrop = (files) => {
+        console.log(files);
+        this.setState({
+            files,
+            fileName: files[0].name,
+        });
+    }
+
     render() {
+        const style = {
+            paddingTop: "30px",
+            textAlign: "center",
+        };
         return (
             <Segment>
                 <Header dividing size='large' content='你的图片' />
@@ -10,6 +29,12 @@ class PhotosPage extends Component {
                     <Grid.Row />
                     <Grid.Column width={4}>
                         <Header color='teal' sub content='第一步 - 添加图片'/>
+                        <Dropzone onDrop={this.onDrop} multiple={false} >
+                            <div style={style}>
+                                <Icon name="upload" size="huge"/>
+                                <h3>将图片拖至此处或点击添加图片</h3>
+                            </div>
+                        </Dropzone>
                     </Grid.Column>
                     <Grid.Column width={1} />
                     <Grid.Column width={4}>
