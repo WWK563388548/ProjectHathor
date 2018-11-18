@@ -3,6 +3,7 @@ import { Menu, Image, Dropdown } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
 const SignInMenu = (props) => {
+    console.log("check auth image", props);
     return (
         <Menu.Item position="right">
           <Image 

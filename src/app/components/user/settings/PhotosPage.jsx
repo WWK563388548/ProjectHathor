@@ -1,8 +1,15 @@
 import React, {Component} from 'react';
 import {Image, Segment, Header, Divider, Grid, Button, Card, Icon} from 'semantic-ui-react';
 import Dropzone from 'react-dropzone';
+import {connect} from 'react-redux';
 import Cropper from 'react-cropper';
 import 'cropperjs/dist/cropper.css';
+import {toastr} from 'react-redux-toastr';
+import {uploadProfileImage} from '../userAction'
+
+const actions = {
+    uploadProfileImage,
+};
 
 class PhotosPage extends Component {
 
@@ -12,6 +19,24 @@ class PhotosPage extends Component {
         preview: '',
         cropResult: null,
         image: {},
+    }
+
+    uploadImage = async () => {
+        try{
+            await this.props.uploadProfileImage(this.state.image, this.state.fileName);
+            this.cancelCrop();
+            toastr.success("Success!", '成功上传图片');
+        }catch(error){
+            toastr.error("Error", error.message);
+        }
+    }
+
+    cancelCrop = () => {
+        this.setState({
+            files: [],
+            image: {},
+
+        });
     }
 
     cropImage = () => {
@@ -83,14 +108,20 @@ class PhotosPage extends Component {
                     <Grid.Column width={4}>
                         <Header sub color='teal' content='第三步 - 预览与上传图片' />
                         {this.state.files[0] &&
-                            <img 
-                                style={{
-                                    minHeight: "200px",
-                                    minWidth: "200px",
-                                }} 
-                                src={this.state.cropResult}
-                                alt="image"
-                            />
+                            <div>
+                                <img 
+                                    style={{
+                                        minHeight: "200px",
+                                        minWidth: "200px",
+                                    }} 
+                                    src={this.state.cropResult}
+                                    alt="image"
+                                />
+                                <Button.Group>
+                                    <Button onClick={this.uploadImage} style={{width: "100px"}} positive icon="check" />
+                                    <Button onClick={this.cancelCrop} style={{width: "100px"}} icon="close" />
+                                </Button.Group>
+                            </div>
                         }
                     </Grid.Column>
 
@@ -120,4 +151,4 @@ class PhotosPage extends Component {
     }
 }
 
-export default PhotosPage;
+export default connect(null, actions)(PhotosPage);
