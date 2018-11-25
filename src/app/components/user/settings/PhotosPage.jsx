@@ -16,6 +16,7 @@ const actions = {
 const mapState = (state) => ({
     auth: state.firebase.auth,
     profile: state.firebase.profile,
+    photos: state.firestore.ordered.photos,
 });
 
 const query = ({auth}) => {
@@ -82,7 +83,15 @@ class PhotosPage extends Component {
     }
 
     render() {
-        console.log(this.state);
+        const {photos, profile} = this.props;
+        let filteredPhotos;
+        if(photos){
+            filteredPhotos = photos.filter(photo => {
+                return photo.url !== profile.photoURL;
+            });
+        }
+        // console.log(this.state);
+        console.log("check photos url", this.props);
         const style = {
             paddingTop: "30px",
             textAlign: "center",
@@ -151,19 +160,20 @@ class PhotosPage extends Component {
 
                 <Card.Group itemsPerRow={5}>
                     <Card>
-                        <Image src='https://randomuser.me/api/portraits/men/20.jpg'/>
+                        <Image src={profile.photoURL}/>
                         <Button positive>头像</Button>
                     </Card>
-
-                        <Card >
+                    {photos && filteredPhotos.map((photo) => (
+                        <Card key={photo.id}>
                             <Image
-                                src='https://randomuser.me/api/portraits/men/20.jpg'
+                                src={photo.url}
                             />
                             <div className='ui two buttons'>
                                 <Button basic color='green'>设置</Button>
                                 <Button basic icon='trash' color='red' />
                             </div>
                         </Card>
+                    ))}
                 </Card.Group>
             </Segment>
         );
