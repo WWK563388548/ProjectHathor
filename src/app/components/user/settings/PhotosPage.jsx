@@ -7,11 +7,12 @@ import {compose} from 'redux';
 import Cropper from 'react-cropper';
 import 'cropperjs/dist/cropper.css';
 import {toastr} from 'react-redux-toastr';
-import {uploadProfileImage, deletePhoto} from '../userAction'
+import {uploadProfileImage, deletePhoto, setAvatarPhoto} from '../userAction'
 
 const actions = {
     uploadProfileImage,
-    deletePhoto
+    deletePhoto,
+    setAvatarPhoto,
 };
 
 const mapState = (state) => ({
@@ -52,10 +53,19 @@ class PhotosPage extends Component {
         }
     }
 
-    handlePhotoDelete = (photo) => () => {
+    handlePhotoDelete = (photo) => async () => {
         // console.log("check delete photo", photo);
         try {
             this.props.deletePhoto(photo);
+        } catch (error) {
+            toastr.error("发生错误", error.message);
+        }
+    }
+
+    handleSetAvatarPhoto = (photo) => async () => {
+        // console.log("check photo", photo);
+        try {
+            this.props.setAvatarPhoto(photo);
         } catch (error) {
             toastr.error("发生错误", error.message);
         }
@@ -179,7 +189,7 @@ class PhotosPage extends Component {
                                 src={photo.url}
                             />
                             <div className='ui two buttons'>
-                                <Button basic color='green'>设置</Button>
+                                <Button  onClick={this.handleSetAvatarPhoto(photo)} basic color='green'>设置</Button>
                                 <Button onClick={this.handlePhotoDelete(photo)} basic icon='trash' color='red' />
                             </div>
                         </Card>

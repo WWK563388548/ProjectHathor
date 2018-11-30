@@ -83,3 +83,16 @@ export const deletePhoto = (photo) =>
             throw new Error("删除照片时发生错误");
         }
     }
+
+export const setAvatarPhoto = (photo) => 
+    async(dispatch, getState, {getFirebase, getFirestore}) => {
+        const firebase = getFirebase();
+        try {
+            return await firebase.updateProfile({
+                photoURL: photo.url,
+            });
+        } catch (error) {
+            console.log(error);
+            throw new Error("设置头像时出现错误")
+        }
+    }
