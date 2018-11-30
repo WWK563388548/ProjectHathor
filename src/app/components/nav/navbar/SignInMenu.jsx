@@ -16,7 +16,7 @@ const SignInMenu = (props) => {
               <Dropdown.Item text="创建新活动" icon="plus" />
               <Dropdown.Item text="我的活动" icon="calendar" />
               <Dropdown.Item text="我的好友" icon="users" />
-              <Dropdown.Item text="我的资料" icon="user" />
+              <Dropdown.Item as={Link} to={`/profile/${props.auth.uid}`} text="我的资料" icon="user" />
               <Dropdown.Item as={Link} to='/settings' text="设置" icon="settings" />
               <Dropdown.Item onClick={props.signOut} text="退出登录" icon="power" />
             </Dropdown.Menu>
