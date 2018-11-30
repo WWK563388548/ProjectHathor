@@ -7,10 +7,11 @@ import {compose} from 'redux';
 import Cropper from 'react-cropper';
 import 'cropperjs/dist/cropper.css';
 import {toastr} from 'react-redux-toastr';
-import {uploadProfileImage} from '../userAction'
+import {uploadProfileImage, deletePhoto} from '../userAction'
 
 const actions = {
     uploadProfileImage,
+    deletePhoto
 };
 
 const mapState = (state) => ({
@@ -48,6 +49,15 @@ class PhotosPage extends Component {
             toastr.success("Success!", '成功上传图片');
         }catch(error){
             toastr.error("Error", error.message);
+        }
+    }
+
+    handlePhotoDelete = (photo) => () => {
+        // console.log("check delete photo", photo);
+        try {
+            this.props.deletePhoto(photo);
+        } catch (error) {
+            toastr.error("发生错误", error.message);
         }
     }
 
@@ -170,7 +180,7 @@ class PhotosPage extends Component {
                             />
                             <div className='ui two buttons'>
                                 <Button basic color='green'>设置</Button>
-                                <Button basic icon='trash' color='red' />
+                                <Button onClick={this.handlePhotoDelete(photo)} basic icon='trash' color='red' />
                             </div>
                         </Card>
                     ))}

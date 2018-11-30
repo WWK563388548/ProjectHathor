@@ -65,3 +65,21 @@ export const uploadProfileImage = (file, fileName) =>
             throw new Error("上传图片时发生问题");
         }
     };
+
+export const deletePhoto = (photo) => 
+    async(dispatch, getState, {getFirebase, getFirestore}) => {
+        const firebase = getFirebase();
+        const firestore = getFirestore();
+        const user = firebase.auth().currentUser;
+        try {
+            await firebase.deleteFile(`${user.uid}/user_images/${photo.name}`);
+            await firestore.delete({
+                collection: 'users',
+                doc: user.uid,
+                subcollections: [{collection: 'photos', doc: photo.id}]
+            });
+        } catch (error) {
+            console.log(error);
+            throw new Error("删除照片时发生错误");
+        }
+    }
