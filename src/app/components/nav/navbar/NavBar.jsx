@@ -16,6 +16,8 @@ const actions = {
 
 const mapState = (state) => ({
     auth: state.firebase.auth,
+    profile: state.firebase.profile,
+    state: state
 })
 
 class NavBar extends React.Component {
@@ -36,6 +38,8 @@ class NavBar extends React.Component {
 
     render() {
         const isAuth = this.props.auth;
+        const profile = this.props.profile;
+        const state = this.props.state;
         console.log("Navbar props", this.props)
         const authenticated = isAuth.isLoaded && !isAuth.isEmpty;
         return (
@@ -56,7 +60,7 @@ class NavBar extends React.Component {
                         // 若登陆显示<SignInMenu />, 反之则显示<SignOutMenu />
                     }
                     { authenticated ? (
-                        <SignInMenu auth={isAuth} signOut={this.handleSignOut} />
+                        <SignInMenu state={state} profile={profile} auth={isAuth} signOut={this.handleSignOut} />
                     ) : (
                         <SignOutMenu signIn={this.handleSignIn} register={this.handleRegister} />
                     )}

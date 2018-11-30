@@ -9,7 +9,7 @@ const SignInMenu = (props) => {
           <Image 
             avatar 
             spaced="right" 
-            src={ props.auth.photoURL || '/assets/user.png' } 
+            src={ props.profile.photoURL || '/assets/user.png' } 
           />
           <Dropdown pointing="top left" text={props.auth.displayName}>
             <Dropdown.Menu>
