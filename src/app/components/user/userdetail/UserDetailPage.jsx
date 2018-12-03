@@ -25,11 +25,11 @@ const mapState = (state) => ({
 
 class UserDetailedPage extends Component {
     render(){
-        const {profile, photos} = this.props;
+        const {profile, photos, auth} = this.props;
         return (
             <Grid>
                 <UserDetailHeader profile={profile}/>
-                <UserDetailDescription profile={profile}/>
+                <UserDetailDescription auth={auth} profile={profile}/>
             </Grid>
         );
     }
