@@ -5,7 +5,8 @@ import {firestoreConnect} from 'react-redux-firebase';
 import {compose} from 'redux';
 import UserDetailHeader from './UserDetailHeader';
 import UserDetailDescription from './UserDetailDescription';
-
+import UserDetailSidebar from './UserDetailSidebar';
+import UserDetailPhotos from './UserDetailPhotos';
 const query = ({auth}) => {
     return [
         {
@@ -30,6 +31,10 @@ class UserDetailedPage extends Component {
             <Grid>
                 <UserDetailHeader profile={profile}/>
                 <UserDetailDescription auth={auth} profile={profile}/>
+                <UserDetailSidebar />
+                {//photos && photos.length > 0 &&
+                    // <UserDetailPhotos photos={photos} />
+                }
             </Grid>
         );
     }
