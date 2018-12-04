@@ -5,14 +5,15 @@ import format from 'date-fns/format';
 const UserDetailDescription = ({profile, auth}) => {
     console.log("user detail description 1", profile);
     console.log("user detail description 2", auth);
-    //let createdAt;
-    //if (profile.createdAt){
-    //    const newTime = profile.createdAt;
+    let createdAt;
+    if (profile.createdAt){
+        const time = profile.createdAt / 1000;
+        createdAt = format(new Date(time), 'D MMM YYYY');
     //    const getDate = newTime.toDate();
 
     //    console.log("check time", getDate)
     //    createdAt = getDate;
-    // }
+    }
     return (
         <Grid.Column width={12}>
                     <Segment>
@@ -21,9 +22,7 @@ const UserDetailDescription = ({profile, auth}) => {
                                 <Header icon='smile' content='关于我'/>
                                 <p>工作: <strong>{profile.occupation}</strong></p>
                                 <p>居住地: <strong>{profile.city}</strong></p>
-                                {
-                                    // <p>生日: <strong>{createdAt}</strong></p>
-                                }
+                                <p>注册时间: <strong>{createdAt}</strong></p>
                                 <p>简介: {profile.description}</p>
 
                             </Grid.Column>
