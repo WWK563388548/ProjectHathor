@@ -137,14 +137,7 @@ class ActivityForm extends React.Component {
       // 返回上一个路径
       this.props.history.goBack();
     } else {
-      // 为新建的活动添加头像和id
-      const newActivity = {
-        ...values,
-        id: cuid(),
-        hostPhotoURL: '/assets/user.png',
-        hostedBy: 'Ken'
-      }
-      this.props.createActivity(newActivity);
+      this.props.createActivity(values);
       // 创建新活动后，进行重定向到‘活动列表界面’
       this.props.history.push('/activities');
     }
