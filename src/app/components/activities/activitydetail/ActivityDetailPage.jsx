@@ -6,20 +6,17 @@ import DetailInfo from './ActivityDetailInfo';
 import DetailChat from './ActivityDetailChat';
 import DetailSideBar from './ActivityDetailSideBar';
 import { withFirestore } from 'react-redux-firebase';
+import { toastr } from 'react-redux-toastr';
 
-const  mapState = (state, ownProps) => {
-    console.log(ownProps);
-    console.log(state);
-    const activityId = ownProps.match.params.id;
+const  mapState = (state) => {
+    // console.log(state);
     let activity = {};
 
-    if(activityId && state.activities.length > 0) {
-        activity = state.activities.filter(item => 
-            item.id === activityId
-        )[0];
+    if(state.firestore.ordered.activities && state.firestore.ordered.activities[0]) {
+        activity = state.firestore.ordered.activities[0]
     }
 
-    console.log(activity);
+    // console.log(activity);
     return {
         activity
     };
@@ -29,10 +26,14 @@ class ActivityDetailPage extends Component {
 
 
     async componentDidMount() {
-        console.log("firestore props", this.props);
-        const {firestore, match} = this.props;
+        // console.log("firestore props", this.props);
+        const {firestore, match, history} = this.props;
         let activity = await firestore.get(`activities/${match.params.id}`);
         console.log("detail page firestore activity", activity);
+        if(!activity.exists){
+            history.push('/activities');
+            toastr.error("此活动不存在!");
+        }
     }
 
     render() {
@@ -40,22 +41,20 @@ class ActivityDetailPage extends Component {
         const {activity} = this.props;
         return (
             <Grid>
-            {/*
                 <Grid.Column width={10}>
                     <DetailHeader 
-                        // activity={activity}
+                        activity={activity}
                     />
                     <DetailInfo 
-                        // activity={activity}
+                        activity={activity}
                     />
                     <DetailChat />
                 </Grid.Column>
                 <Grid.Column width={6}>
                     <DetailSideBar 
-                        // participants={activity.participants}
+                        participants={activity.participants}
                     />
                 </Grid.Column>
-            */}
             </Grid>
         );
     }
