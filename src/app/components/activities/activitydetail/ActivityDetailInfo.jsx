@@ -18,6 +18,10 @@ class ActiivityDetailInfo extends React.Component {
     
     render() {
         const activity = this.props.activity;
+        let activityDate;
+        if(activity.date){
+            activityDate = activity.date.toDate();
+        }
         return (
             <Segment.Group>
                 <Segment attached="top">
@@ -36,7 +40,7 @@ class ActiivityDetailInfo extends React.Component {
                             <Icon name="calendar" size="large" color="teal" />
                         </Grid.Column>
                         <Grid.Column width={15}>
-                            <span>{format(activity.date, 'YYYY MMMM do dddd', {locale: chineseLocale})} - {format(activity.date, 'HH:mm A', {locale: chineseLocale})}</span>
+                            <span>{format(activityDate, 'YYYY MMMM do dddd', {locale: chineseLocale})} - {format(activityDate, 'HH:mm A', {locale: chineseLocale})}</span>
                         </Grid.Column>
                     </Grid>
                 </Segment>
