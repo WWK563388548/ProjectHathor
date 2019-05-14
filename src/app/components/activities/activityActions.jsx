@@ -75,6 +75,12 @@ export const loadActivities = () => {
     }
 }
 
+export const objectToArray = (object) => {
+    if(object){
+        return Object.entries(object).map(e => Object.assign(e[1], {id: e[0]}));
+    }
+}
+
 const createNewActivity = (user, photoURL, activity) => {
     activity.date = moment(activity.date).toDate();
     return {
