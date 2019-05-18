@@ -22,7 +22,7 @@ const mapState = (state, ownProps) => {
   let activity = {};
 
   if(state.firestore.ordered.activities && state.firestore.ordered.activities[0]) {
-    activity = state.firestore.ordered.activities.filter(item => item.id === activityId)[0];
+      activity = state.firestore.ordered.activities.filter(item => item.id === activityId)[0];
   }
 
   console.log("check firestore for update form activity", activity);
@@ -72,9 +72,15 @@ class ActivityForm extends React.Component {
   };
 
   async componentDidMount() {
-    console.log("check firestore for update form", this.props);
+    console.log("check firestore for update form 1", this.props);
     const {firestore, match} = this.props;
-    await firestore.get(`activities/${match.params.id}`);
+    let activity = await firestore.get(`activities/${match.params.id}`);
+    console.log("check firestore for update form 2", activity);
+    if(activity.exists){
+      this.setState({
+        locationLatLng: activity.data().locationLatLng
+      });
+    }
   }
 
   handleCitySelect = (selectedCity) => {
@@ -139,7 +145,7 @@ class ActivityForm extends React.Component {
   onFormSubmit = (values) => {
     console.log(values);
     // console.log(this.state.event);
-    values.date = moment(values.date).format();
+    // values.date = moment(values.date).format();
     values.locationLatLng = this.state.locationLatLng;
     if(this.props.initialValues.id){
       this.props.updateActivity(values);

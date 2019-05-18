@@ -40,9 +40,15 @@ export const createActivity = (activity) => {
 };
 
 export const updateActivity = (activity) => {
-    return async dispatch => {
+    return async (dispatch, getState, {getFirestore}) => {
+        const firestore = getFirestore();
+        if(activity.date !== getState().firestore.ordered.activities[0].date){
+            activity.date = moment(activity.date).toDate();
+        }
+        
         try {
-            dispatch({type: UPDATE_ACTIVITY, payload: {activity}});
+            await firestore.update(`activities/${activity.id}`, activity);
+            // dispatch({type: UPDATE_ACTIVITY, payload: {activity}});
             toastr.success('成功!', '成功更新活动');
         } catch (error) {
             toastr.error("呃....", '更新活动失败');
