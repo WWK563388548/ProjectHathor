@@ -2,6 +2,7 @@
 import React from 'react';
 import { Segment, Form, Button, Grid, Header } from 'semantic-ui-react';
 import { connect } from 'react-redux';
+import { withFirestore } from 'react-redux-firebase';
 import { createActivity, updateActivity } from '../activityActions';
 import cuid from 'cuid';
 import moment from 'moment';
@@ -16,15 +17,17 @@ import DateInput from '../../form/DateInput';
 import PlaceInput from '../../form/PlaceInput';
 
 const mapState = (state, ownProps) => {
+  console.log("check firestore for update form state", state);
   const activityId = ownProps.match.params.id;
   let activity = {};
 
-  if(activityId && state.activities.length > 0) {
-    activity = state.activities.filter(item => item.id === activityId)[0];
+  if(state.firestore.ordered.activities && state.firestore.ordered.activities[0]) {
+    activity = state.firestore.ordered.activities.filter(item => item.id === activityId)[0];
   }
 
+  console.log("check firestore for update form activity", activity);
   return {
-    initialValues: activity
+    initialValues: activity,
   };
 }
 
@@ -67,6 +70,12 @@ class ActivityForm extends React.Component {
     locationLatLng: {},
     scriptLoaded: false, 
   };
+
+  async componentDidMount() {
+    console.log("check firestore for update form", this.props);
+    const {firestore, match} = this.props;
+    await firestore.get(`activities/${match.params.id}`);
+  }
 
   handleCitySelect = (selectedCity) => {
     geocodeByAddress(selectedCity)
@@ -152,7 +161,7 @@ class ActivityForm extends React.Component {
   }
   
   render() {
-    console.log(this.props);
+    console.log("activity form", this.props);
     const {invalid} = this.props;
     const {submitting} = this.props;
     const {pristine} = this.props;
@@ -211,6 +220,6 @@ class ActivityForm extends React.Component {
   }
 }
 // "enableReinitialize" 允许我们在props发生改变后，重新初始化
-export default connect(mapState, actions)(
+export default withFirestore(connect(mapState, actions)(
   reduxForm({form: 'activityForm', enableReinitialize: true, validate })(ActivityForm)
-);
+));
