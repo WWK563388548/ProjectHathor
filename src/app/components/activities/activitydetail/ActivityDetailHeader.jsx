@@ -23,8 +23,14 @@ class ActiivityDetailHeader extends React.Component {
         const activity = this.props.activity;
         console.log(activity);
         let activityDate;
+        let year, month, day, hours, minutes, seconds;
         if(activity.date){
             activityDate = activity.date.toDate();
+            year = activityDate.getFullYear();
+            month = activityDate.getMonth() + 1;
+            day = activityDate.getDate();
+            hours = activityDate.getHours();
+            minutes = activityDate.getMinutes();
         }
         return (
             <Segment.Group>
@@ -40,7 +46,7 @@ class ActiivityDetailHeader extends React.Component {
                                         content={activity.title}
                                         style={{ color: 'white' }}
                                     />
-                                    <p>{format(activityDate, 'YYYY MMMM do dddd', {locale: chineseLocale})} - {format(activityDate, 'HH:mm A', {locale: chineseLocale})}</p>
+                                    <p>{`${year} 年 ${month} 月 ${day} 日`}</p>
                                     <p>
                                         举办者: <strong>{activity.hostedBy}</strong>
                                     </p>

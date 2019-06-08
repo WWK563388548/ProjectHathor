@@ -10,6 +10,16 @@ class ActivityListItem extends React.Component {
         const activityItemData = this.props.activity;
         // const onActivityEdit = this.props.onActivityEdit;
         const deleteActivity = this.props.deleteActivity;
+        let date;
+        let year, month, day, hours, minutes, seconds;
+        if(activityItemData.date){
+            date = activityItemData.date.toDate();
+            year = date.getFullYear();
+            month = date.getMonth() + 1;
+            day = date.getDate();
+            hours = date.getHours();
+            minutes = date.getMinutes();
+        }
         
         return (
             <Segment.Group>
@@ -30,7 +40,7 @@ class ActivityListItem extends React.Component {
 
                 <Segment>   
                     <span>
-                        <Icon name="clock" /> {format(activityItemData.date.toDate(), 'YYYY MMMM do dddd', {locale: chineseLocale})} - {format(activityItemData.date.toDate(), 'HH:mm A', {locale: chineseLocale})} |
+                        <Icon name="clock" /> {`${year} 年 ${month} 月 ${day} 日 - ${hours} 时 ${minutes} 分`} |
                         <Icon name="marker" /> {activityItemData.location}
                     </span>
                 </Segment>
