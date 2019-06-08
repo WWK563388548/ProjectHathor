@@ -15,6 +15,7 @@ import TextArea from '../../form/TextArea';
 import SelectInput from '../../form/SelectInput';
 import DateInput from '../../form/DateInput';
 import PlaceInput from '../../form/PlaceInput';
+import { toastr } from 'react-redux-toastr';
 
 const mapState = (state, ownProps) => {
   console.log("check firestore for update form state", state);
@@ -75,15 +76,19 @@ class ActivityForm extends React.Component {
   };
 
   async componentDidMount() {
-    console.log("check firestore for update form 1", this.props);
+    // console.log("check firestore for update form 1", this.props);
     const {firestore, match} = this.props;
-    let activity = await firestore.get(`activities/${match.params.id}`);
+    await firestore.setListener(`activities/${match.params.id}`);
+    /* let activity = await firestore.get(`activities/${match.params.id}`);
     console.log("check firestore for update form 2", activity);
-    if(activity.exists){
+    if(!activity.exists){
+      this.props.history.push("/activities");
+      toastr.error("抱歉", "这个活动似乎不存在");
+    } else {
       this.setState({
         locationLatLng: activity.data().locationLatLng
       });
-    }
+    } */
   }
 
   handleCitySelect = (selectedCity) => {
@@ -151,6 +156,9 @@ class ActivityForm extends React.Component {
     // values.date = moment(values.date).format();
     values.locationLatLng = this.state.locationLatLng;
     if(this.props.initialValues.id){
+      if(Object.keys(values.locationLatLng).length === 0){
+        values.locationLatLng = this.props.activity.locationLatLng;
+      }
       this.props.updateActivity(values);
       // 返回上一个路径
       this.props.history.goBack();
