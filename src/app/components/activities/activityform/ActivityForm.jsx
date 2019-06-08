@@ -3,7 +3,7 @@ import React from 'react';
 import { Segment, Form, Button, Grid, Header } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { withFirestore } from 'react-redux-firebase';
-import { createActivity, updateActivity } from '../activityActions';
+import { createActivity, updateActivity, cancelToggle } from '../activityActions';
 import cuid from 'cuid';
 import moment from 'moment';
 import { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
@@ -23,11 +23,13 @@ const mapState = (state, ownProps) => {
 
   if(state.firestore.ordered.activities && state.firestore.ordered.activities[0]) {
       activity = state.firestore.ordered.activities.filter(item => item.id === activityId)[0];
+      // activity.date = activity.date.toDate();
   }
 
   console.log("check firestore for update form activity", activity);
   return {
     initialValues: activity,
+    activity,
   };
 }
 
@@ -35,6 +37,7 @@ const mapState = (state, ownProps) => {
 const actions = {
   createActivity,
   updateActivity,
+  cancelToggle,
 }
 
 const category = [
@@ -217,7 +220,21 @@ class ActivityForm extends React.Component {
               <Button disabled={invalid || submitting || pristine} positive type="submit">
                 提交
               </Button>
-              <Button onClick={this.props.history.goBack} type="button">取消</Button>
+              <Button 
+                onClick={
+                  this.props.initialValues.id 
+                  ? () => this.props.history.push(`/activities/${this.props.initialValues.id }`)
+                  : () => this.props.history.push(`/activities`)
+                } 
+                type="button">
+                关闭
+              </Button>
+              <Button 
+                floated="right"
+                content={this.props.activity.cancelled ? "重新开启活动" : "取消活动"}
+                color={this.props.activity.cancelled ? 'green' : 'red'}
+                onClick={() => this.props.cancelToggle(!this.props.activity.cancelled, this.props.activity.id)}
+                type="button" />
             </Form>
           </Segment>
         </Grid.Column>

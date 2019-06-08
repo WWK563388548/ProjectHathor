@@ -56,6 +56,18 @@ export const updateActivity = (activity) => {
     };
 };
 
+export const cancelToggle = (cancelled, activityId) =>
+    async (dispatch, getState, {getFirestore}) => {
+        const firestore = getFirestore();
+        try {
+            await firestore.update(`activities/${activityId}`, {
+                cancelled: cancelled,
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
 export const deleteActivity = (activityId) => {
     return async dispatch => {
         try {
