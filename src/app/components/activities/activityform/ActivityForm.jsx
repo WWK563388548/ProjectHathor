@@ -230,7 +230,7 @@ class ActivityForm extends React.Component {
               </Button>
               <Button 
                 onClick={
-                  this.props.initialValues.id 
+                  this.props.initialValues
                   ? () => this.props.history.push(`/activities/${this.props.initialValues.id }`)
                   : () => this.props.history.push(`/activities`)
                 } 
