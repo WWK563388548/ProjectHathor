@@ -4,14 +4,10 @@ import ActivityListItem from './ActivityListItem';
 class ActivityList extends React.Component {
     render() {
         const activities = this.props.activities;
-        const deleteActivity = this.props.deleteActivity;
         return (
             <div>
                 {activities && activities.map(item => {
-                    return <ActivityListItem 
-                            key={item.id} 
-                            activity={item} 
-                            deleteActivity={deleteActivity} />;
+                    return <ActivityListItem key={item.id} activity={item} />;
                 })}
             </div>
         );

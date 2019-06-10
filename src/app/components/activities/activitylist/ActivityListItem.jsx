@@ -1,6 +1,6 @@
 import React from 'react';
 import ActivityListParticipant from './ActivityListParticipant';
-import { Segment, Item, Icon, List, Button } from 'semantic-ui-react';
+import { Segment, Item, Icon, List, Button, Label } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import format from 'date-fns/format';
 import chineseLocale from 'date-fns/locale/zh_cn';
@@ -9,7 +9,6 @@ class ActivityListItem extends React.Component {
     render() {
         const activityItemData = this.props.activity;
         // const onActivityEdit = this.props.onActivityEdit;
-        const deleteActivity = this.props.deleteActivity;
         let date;
         let year, month, day, hours, minutes, seconds;
         if(activityItemData.date){
@@ -33,6 +32,13 @@ class ActivityListItem extends React.Component {
                                 <Item.Description>
                                     组织者: <a>{activityItemData.hostedBy}</a>
                                 </Item.Description>
+                                {activityItemData.cancelled &&
+                                    <Label 
+                                        style={{top: '-40px'}} 
+                                        ribbon='right' 
+                                        color="red" 
+                                        content="此活动已经被取消" />
+                                }
                             </Item.Content>
                         </Item>
                     </Item.Group>
@@ -59,12 +65,6 @@ class ActivityListItem extends React.Component {
 
                 <Segment clearing>
                     <span>{activityItemData.description}</span>
-                    <Button
-                    as="a" 
-                    color="red" 
-                    floated="right" 
-                    content="删除"
-                    onClick={deleteActivity(activityItemData.id)} />
                     {console.log(activityItemData)}
                     {console.log(activityItemData.id)}
                     <Button

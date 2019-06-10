@@ -59,9 +59,12 @@ export const updateActivity = (activity) => {
 export const cancelToggle = (cancelled, activityId) =>
     async (dispatch, getState, {getFirestore}) => {
         const firestore = getFirestore();
+        const message = cancelled ? "要取消这个活动吗?" : "要重新激活这个活动吗";
         try {
-            await firestore.update(`activities/${activityId}`, {
-                cancelled: cancelled,
+            toastr.confirm(message, {
+                onOk: async () => await firestore.update(`activities/${activityId}`, {
+                    cancelled: cancelled,
+                }),
             });
         } catch (error) {
             console.log(error);
