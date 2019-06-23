@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import { Segment, Image, Item, Header, Button } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import format from 'date-fns/format';
@@ -20,8 +20,9 @@ class ActiivityDetailHeader extends React.Component {
             color: 'white'
         };
 
-        const activity = this.props.activity;
+        const {activity, isHost, isGoing} = this.props;
         console.log(activity);
+        console.log(this.props);
         let activityDate;
         let year, month, day, hours, minutes, seconds;
         if(activity.date){
@@ -56,13 +57,24 @@ class ActiivityDetailHeader extends React.Component {
                     </Segment>
                 </Segment>
     
-                <Segment attached="bottom">
-                    <Button>取消</Button>
-                    <Button color="teal">参加活动</Button>
+                <Segment attached="bottom" clearing>
+
+                    {!isHost && 
+                        <Fragment>
+                            {isGoing ? (
+                                <Button>取消参加</Button>
+                                ) : (
+                                <Button color="teal">参加活动</Button>
+                                )
+                            }
+                        </Fragment>
+                    }
     
-                    <Button as={Link} to={`/manage/${activity.id}`} color="orange" floated="right">
-                        管理活动
-                    </Button>
+                    {isHost && 
+                        <Button as={Link} to={`/manage/${activity.id}`} color="orange" floated="right">
+                            管理活动
+                        </Button>
+                    }
                 </Segment>
             </Segment.Group>
         );

@@ -19,7 +19,8 @@ const  mapState = (state) => {
 
     // console.log(activity);
     return {
-        activity
+        activity,
+        auth: state.firebase.auth,
     };
 }
 
@@ -39,13 +40,17 @@ class ActivityDetailPage extends Component {
 
     render() {
         console.log("DetailPage", this.props);
-        const {activity} = this.props;
+        const {activity, auth} = this.props;
         const participants = activity && activity.participants && objectToArray(activity.participants);
+        const isHost = activity.hostUid === auth.uid;
+        const isGoing = participants && participants.some(participant => participant.id === auth.uid);
         return (
             <Grid>
                 <Grid.Column width={10}>
                     <DetailHeader 
                         activity={activity}
+                        isGoing={isGoing}
+                        isHost={isHost}
                     />
                     <DetailInfo 
                         activity={activity}
