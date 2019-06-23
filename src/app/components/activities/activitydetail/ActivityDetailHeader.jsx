@@ -20,7 +20,7 @@ class ActiivityDetailHeader extends React.Component {
             color: 'white'
         };
 
-        const {activity, isHost, isGoing} = this.props;
+        const {activity, isHost, isGoing, goingToActivity} = this.props;
         console.log(activity);
         console.log(this.props);
         let activityDate;
@@ -64,7 +64,7 @@ class ActiivityDetailHeader extends React.Component {
                             {isGoing ? (
                                 <Button>取消参加</Button>
                                 ) : (
-                                <Button color="teal">参加活动</Button>
+                                <Button onClick={() => goingToActivity(activity)} color="teal">参加活动</Button>
                                 )
                             }
                         </Fragment>

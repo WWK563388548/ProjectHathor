@@ -71,7 +71,7 @@ export const uploadProfileImage = (file, fileName) =>
     };
 
 export const deletePhoto = (photo) => 
-    async(dispatch, getState, {getFirebase, getFirestore}) => {
+    async (dispatch, getState, {getFirebase, getFirestore}) => {
         const firebase = getFirebase();
         const firestore = getFirestore();
         const user = firebase.auth().currentUser;
@@ -89,7 +89,7 @@ export const deletePhoto = (photo) =>
     }
 
 export const setAvatarPhoto = (photo) => 
-    async(dispatch, getState, {getFirebase, getFirestore}) => {
+    async (dispatch, getState, {getFirebase, getFirestore}) => {
         const firebase = getFirebase();
         try {
             return await firebase.updateProfile({
@@ -98,5 +98,37 @@ export const setAvatarPhoto = (photo) =>
         } catch (error) {
             console.log(error);
             throw new Error("设置头像时出现错误")
+        }
+    }
+
+export const goingToActivity = (activity) =>
+    async (dispatch, getState, {getFirebase, getFirestore}) => {
+        const firebase = getFirebase();
+        const firestore = getFirestore();
+        const user = firebase.auth().currentUser;
+        const profile = getState().firebase.profile;
+        console.log("firestore.FieldValue.serverTimeStamp()", firestore);
+        const participant = {
+            going: true,
+            joinDate: firestore.FieldValue.serverTimestamp(),
+            photoURL: profile.photoURL || '../public/assets/user.png',
+            displayName: profile.displayName,
+            host: false,
+        };
+
+        try {
+            await firestore.update(`activities/${activity.id}`, {
+                [`participants.${user.uid}`]: participant
+            });
+            await firestore.set(`activity_participant/${activity.id}_${user.uid}`, {
+                activityId: activity.id,
+                user: user.uid,
+                activityDate: activity.date,
+                host: false,
+            });
+            toastr.success('Success', '您已成功参加此活动');
+        } catch(error) {
+            console.log("Error of goingToActivity", error);
+            toastr.error('啊哦', '参加活动失败');
         }
     }

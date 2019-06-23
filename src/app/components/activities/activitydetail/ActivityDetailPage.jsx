@@ -8,6 +8,7 @@ import DetailSideBar from './ActivityDetailSideBar';
 import { withFirestore } from 'react-redux-firebase';
 import { toastr } from 'react-redux-toastr';
 import { objectToArray } from '../activityActions';
+import { goingToActivity } from '../../user/userAction';
 
 const  mapState = (state) => {
     // console.log("the detail page 1", state);
@@ -24,23 +25,29 @@ const  mapState = (state) => {
     };
 }
 
+const action = {
+    goingToActivity,
+};
+
 class ActivityDetailPage extends Component {
 
 
     async componentDidMount() {
         // console.log("firestore props", this.props);
-        const {firestore, match, history} = this.props;
-        let activity = await firestore.get(`/activities/${match.params.id}`);
-        console.log("detail page firestore activity", activity);
-        if(!activity.exists){
-            history.push('/activities');
-            toastr.error("此活动不存在!");
-        }
+        const {firestore, match} = this.props;
+        await firestore.setListener(`/activities/${match.params.id}`);
+        // console.log("detail page firestore activity", activity);
+
+    }
+
+    async componentWillUnmount() {
+        const {firestore, match} = this.props;
+        await firestore.unsetListener(`/activities/${match.params.id}`);
     }
 
     render() {
         console.log("DetailPage", this.props);
-        const {activity, auth} = this.props;
+        const {activity, auth, goingToActivity} = this.props;
         const participants = activity && activity.participants && objectToArray(activity.participants);
         const isHost = activity.hostUid === auth.uid;
         const isGoing = participants && participants.some(participant => participant.id === auth.uid);
@@ -51,6 +58,7 @@ class ActivityDetailPage extends Component {
                         activity={activity}
                         isGoing={isGoing}
                         isHost={isHost}
+                        goingToActivity={goingToActivity}
                     />
                     <DetailInfo 
                         activity={activity}
@@ -67,4 +75,4 @@ class ActivityDetailPage extends Component {
     }
 }
 
-export default withFirestore(connect(mapState)(ActivityDetailPage));
+export default withFirestore(connect(mapState, action)(ActivityDetailPage));
