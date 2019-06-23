@@ -18,7 +18,8 @@ import PlaceInput from '../../form/PlaceInput';
 import { toastr } from 'react-redux-toastr';
 
 const mapState = (state, ownProps) => {
-  console.log("check firestore for update form state", state);
+  // console.log("check firestore for update form state 1", state);
+  // console.log("check firestore for update form state 2", ownProps);
   const activityId = ownProps.match.params.id;
   let activity = {};
 
@@ -160,7 +161,7 @@ class ActivityForm extends React.Component {
     // console.log(this.state.event);
     // values.date = moment(values.date).format();
     values.locationLatLng = this.state.locationLatLng;
-    if(this.props.initialValues.id){
+    if(this.props.initialValues){
       if(Object.keys(values.locationLatLng).length === 0){
         values.locationLatLng = this.props.activity.locationLatLng;
       }
@@ -242,12 +243,14 @@ class ActivityForm extends React.Component {
                 type="button">
                 关闭
               </Button>
-              <Button 
-                floated="right"
-                content={this.props.activity.cancelled ? "重新开启活动" : "取消活动"}
-                color={this.props.activity.cancelled ? 'green' : 'red'}
-                onClick={() => this.props.cancelToggle(!this.props.activity.cancelled, this.props.activity.id)}
-                type="button" />
+              {this.props.activity &&
+                <Button 
+                  floated="right"
+                  content={this.props.activity.cancelled ? "重新开启活动" : "取消活动"}
+                  color={this.props.activity.cancelled ? 'green' : 'red'}
+                  onClick={() => this.props.cancelToggle(!this.props.activity.cancelled, this.props.activity.id)}
+                  type="button" />
+              }
             </Form>
           </Segment>
         </Grid.Column>
