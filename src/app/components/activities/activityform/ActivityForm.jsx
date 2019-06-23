@@ -91,6 +91,11 @@ class ActivityForm extends React.Component {
     } */
   }
 
+  async componentWillUnmount(){
+    const {firestore, match} = this.props;
+    await firestore.unsetListener(`activities/${match.params.id}`);
+  }
+
   handleCitySelect = (selectedCity) => {
     geocodeByAddress(selectedCity)
       .then(results => {
