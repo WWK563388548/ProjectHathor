@@ -5,6 +5,7 @@ class ActiivityDetailSideBar extends React.Component {
     render() {
         const isHost = false;
         const participants = this.props.participants;
+        console.log("What is member in sidebar", participants);
         return (
             <div>
                 <Segment
@@ -34,7 +35,7 @@ class ActiivityDetailSideBar extends React.Component {
                                 <Item.Image size="tiny" src={member.photoURL} />
                                 <Item.Content verticalAlign="middle">
                                     <Item.Header as="h3">
-                                        <a>{member.name}</a>
+                                        <a>{member.name || member.displayName}</a>
                                     </Item.Header>
                                 </Item.Content>
                             </Item>
