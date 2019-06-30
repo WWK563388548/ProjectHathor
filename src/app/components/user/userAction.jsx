@@ -126,9 +126,31 @@ export const goingToActivity = (activity) =>
                 activityDate: activity.date,
                 host: false,
             });
-            toastr.success('Success', '您已成功参加此活动');
+            toastr.success('太棒了', '您已成功参加此活动');
         } catch(error) {
             console.log("Error of goingToActivity", error);
             toastr.error('啊哦', '参加活动失败');
         }
-    }
+    };
+
+    export const cancelGoingToActivity = (activity) =>
+        async (dispatch, getState, {getFirebase, getFirestore}) => {
+            const firebase = getFirebase();
+            const firestore = getFirestore();
+            const user = firebase.auth().currentUser;
+            // const profile = getState().firebase.profile;
+
+            try {
+                console.log("cancelGoingToActivity 1", firestore);
+                await firestore.update(`activities/${activity.id}`, {
+                    [`participants.${user.uid}`]: firestore.FieldValue.delete(),
+                });
+                console.log("cancelGoingToActivity 2", activity.id);
+                console.log("cancelGoingToActivity 3", user.uid);
+                await firestore.delete(`activity_participant/${activity.id}_${user.uid}`);
+                toastr.success('真遗憾', '但您已成功退出此活动');
+            } catch(error){
+                console.log("cancelGoingToActivity", error);
+                toastr.error('啊哦', "退出活动失败");
+            }
+        };

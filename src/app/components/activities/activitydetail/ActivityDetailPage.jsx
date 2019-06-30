@@ -6,9 +6,8 @@ import DetailInfo from './ActivityDetailInfo';
 import DetailChat from './ActivityDetailChat';
 import DetailSideBar from './ActivityDetailSideBar';
 import { withFirestore } from 'react-redux-firebase';
-import { toastr } from 'react-redux-toastr';
 import { objectToArray } from '../activityActions';
-import { goingToActivity } from '../../user/userAction';
+import { goingToActivity, cancelGoingToActivity } from '../../user/userAction';
 
 const  mapState = (state) => {
     // console.log("the detail page 1", state);
@@ -27,6 +26,7 @@ const  mapState = (state) => {
 
 const action = {
     goingToActivity,
+    cancelGoingToActivity,
 };
 
 class ActivityDetailPage extends Component {
@@ -47,7 +47,7 @@ class ActivityDetailPage extends Component {
 
     render() {
         console.log("DetailPage", this.props);
-        const {activity, auth, goingToActivity} = this.props;
+        const {activity, auth, goingToActivity, cancelGoingToActivity} = this.props;
         const participants = activity && activity.participants && objectToArray(activity.participants);
         const isHost = activity.hostUid === auth.uid;
         const isGoing = participants && participants.some(participant => participant.id === auth.uid);
@@ -59,6 +59,7 @@ class ActivityDetailPage extends Component {
                         isGoing={isGoing}
                         isHost={isHost}
                         goingToActivity={goingToActivity}
+                        cancelGoingToActivity={cancelGoingToActivity}
                     />
                     <DetailInfo 
                         activity={activity}
