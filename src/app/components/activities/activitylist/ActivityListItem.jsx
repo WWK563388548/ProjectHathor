@@ -29,7 +29,7 @@ class ActivityListItem extends React.Component {
                         <Item>
                             <Item.Image size="tiny" circular src={activityItemData.hostPhotoURL} />
                             <Item.Content>
-                                <Item.Header as={Link} to={`/activities/${activityItemData.id}`}>{activityItemData.title}</Item.Header>
+                                <Item.Header as={Link} to={`/activity/${activityItemData.id}`}>{activityItemData.title}</Item.Header>
                                 <Item.Description>
                                     组织者: <Link to={`/profile/${activityItemData.hostUid}`}>{activityItemData.hostedBy}</Link>
                                 </Item.Description>
@@ -66,8 +66,6 @@ class ActivityListItem extends React.Component {
 
                 <Segment clearing>
                     <span>{activityItemData.description}</span>
-                    {console.log(activityItemData)}
-                    {console.log(activityItemData.id)}
                     <Button
                     as={Link}
                     to={`/activity/${activityItemData.id}`}
