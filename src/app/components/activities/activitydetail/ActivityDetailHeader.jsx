@@ -49,7 +49,11 @@ class ActiivityDetailHeader extends React.Component {
                                     />
                                     <p>{`${year} 年 ${month} 月 ${day} 日`}</p>
                                     <p>
-                                        举办者: <strong>{activity.hostedBy}</strong>
+                                        举办者: <strong>
+                                            <Link style={{color: '#fff'}} to={`/profile/${activity.hostUid}`}>
+                                                {activity.hostedBy}
+                                            </Link>
+                                        </strong>
                                     </p>
                                 </Item.Content>
                             </Item>
@@ -65,7 +69,6 @@ class ActiivityDetailHeader extends React.Component {
                                 <Button 
                                     onClick={() => {
                                         cancelGoingToActivity(activity);
-                                        window.location.pathname = `/activity`;
                                     }}
                                 >
                                     取消参加

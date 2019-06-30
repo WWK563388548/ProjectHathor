@@ -1,5 +1,6 @@
 import React from 'react';
 import { Segment, List, Item, Label } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 
 class ActiivityDetailSideBar extends React.Component {
     render() {
@@ -35,7 +36,7 @@ class ActiivityDetailSideBar extends React.Component {
                                 <Item.Image size="tiny" src={member.photoURL} />
                                 <Item.Content verticalAlign="middle">
                                     <Item.Header as="h3">
-                                        <a>{member.name || member.displayName}</a>
+                                        <Link to={`/profile/${member.id}`}>{member.name || member.displayName}</Link>
                                     </Item.Header>
                                 </Item.Content>
                             </Item>

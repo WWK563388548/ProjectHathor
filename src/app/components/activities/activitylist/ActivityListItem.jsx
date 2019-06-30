@@ -4,6 +4,7 @@ import { Segment, Item, Icon, List, Button, Label } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import format from 'date-fns/format';
 import chineseLocale from 'date-fns/locale/zh_cn';
+import { objectToArray } from '../activityActions';
 
 class ActivityListItem extends React.Component {
     render() {
@@ -28,9 +29,9 @@ class ActivityListItem extends React.Component {
                         <Item>
                             <Item.Image size="tiny" circular src={activityItemData.hostPhotoURL} />
                             <Item.Content>
-                                <Item.Header as="a">{activityItemData.title}</Item.Header>
+                                <Item.Header as={Link} to={`/activities/${activityItemData.id}`}>{activityItemData.title}</Item.Header>
                                 <Item.Description>
-                                    组织者: <a>{activityItemData.hostedBy}</a>
+                                    组织者: <Link to={`/profile/${activityItemData.hostUid}`}>{activityItemData.hostedBy}</Link>
                                 </Item.Description>
                                 {activityItemData.cancelled &&
                                     <Label 
@@ -57,8 +58,8 @@ class ActivityListItem extends React.Component {
                             /* 判断参与者数组是否为空 */
                         }
                         {activityItemData.participants && 
-                            Object.values(activityItemData.participants).map( (item, index) => {
-                            return <ActivityListParticipant key={index} participant={item} />;
+                            objectToArray(activityItemData.participants).map( (item) => {
+                            return <ActivityListParticipant key={item.id} participant={item} />;
                         })}
                     </List>
                 </Segment>

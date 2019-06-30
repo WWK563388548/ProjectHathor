@@ -1,5 +1,6 @@
 import React from 'react';
 import { List, Image } from 'semantic-ui-react';
+import {Link} from 'react-router-dom';
 
 class ActivityListParticipant extends React.Component {
     
@@ -7,7 +8,7 @@ class ActivityListParticipant extends React.Component {
         const person = this.props.participant;
         return (
             <List.Item>
-                <Image as='a' size='mini' circular src={person.photoURL} />
+                <Image as={Link} to={`/profile/${person.id}`} size='mini' circular src={person.photoURL} />
             </List.Item>
         );
     }
