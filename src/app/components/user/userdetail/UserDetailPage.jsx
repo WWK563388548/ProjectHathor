@@ -30,13 +30,14 @@ const mapState = (state, ownProp) => {
 
 class UserDetailedPage extends Component {
     render(){
-        const {profile, photos, auth} = this.props;
+        const {profile, photos, auth, match} = this.props;
+        const isCurrentUser = auth.uid === match.params.id;
         console.log("UserDetailedPage", this.props);
         return (
             <Grid>
                 <UserDetailHeader profile={profile}/>
                 <UserDetailDescription auth={auth} profile={profile}/>
-                <UserDetailSidebar />
+                <UserDetailSidebar isCurrentUser={isCurrentUser} />
                 {//photos && photos.length > 0 &&
                     // <UserDetailPhotos photos={photos} />
                 }
