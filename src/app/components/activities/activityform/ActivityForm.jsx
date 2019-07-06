@@ -157,11 +157,12 @@ class ActivityForm extends React.Component {
   // }
 
   onFormSubmit = (values) => {
-    console.log(values);
+    console.log(this.props.initialValues);
     // console.log(this.state.event);
     // values.date = moment(values.date).format();
     values.locationLatLng = this.state.locationLatLng;
-    if(this.props.initialValues){
+    if(this.props.match.path.indexOf("createActivity") < 0){
+      console.log("this.props.location.pathname", this.props.location.pathname);
       if(Object.keys(values.locationLatLng).length === 0){
         values.locationLatLng = this.props.activity.locationLatLng;
       }

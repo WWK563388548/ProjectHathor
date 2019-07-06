@@ -106,8 +106,17 @@ export const goingToActivity = (activity) =>
         const firebase = getFirebase();
         const firestore = getFirestore();
         const user = firebase.auth().currentUser;
-        const profile = getState().firebase.profile;
-        console.log("firestore.FieldValue.serverTimeStamp()", firestore);
+        // displayName
+        let profile;
+        if(getState().firebase.profile.displayName){
+            profile = getState().firebase.profile;
+        } else {
+            profile = getState().firebase.auth;
+        }
+        console.log("firestore.FieldValue.serverTimeStamp() 1", firestore);
+        console.log("firestore.FieldValue.serverTimeStamp() 2", activity);
+        console.log("firestore.FieldValue.serverTimeStamp() 3", user);
+        console.log("firestore.FieldValue.serverTimeStamp() 4", getState());
         const participant = {
             going: true,
             joinDate: firestore.FieldValue.serverTimestamp(),
