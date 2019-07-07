@@ -6,14 +6,25 @@ const UserDetailDescription = ({profile, auth}) => {
     console.log("user detail description 1", profile);
     console.log("user detail description 2", auth);
     let createdAt;
-    if (profile.createdAt){
+    let createdAtForObject;
+    let year, month, day, hours, minutes, seconds;
+
+    if (typeof profile.createdAt !== "object"){
         const time = profile.createdAt / 1000;
         createdAt = format(new Date(time), 'D MMM YYYY');
     //    const getDate = newTime.toDate();
 
     //    console.log("check time", getDate)
     //    createdAt = getDate;
+    } else {
+        createdAtForObject = profile.createdAt.toDate();
+        year = createdAtForObject.getFullYear();
+        month = createdAtForObject.getMonth() + 1;
+        day = createdAtForObject.getDate();
+        // hours = createdAt.getHours();
+        // minutes = createdAt.getMinutes();
     }
+
     return (
         <Grid.Column width={12}>
                     <Segment>
@@ -22,7 +33,7 @@ const UserDetailDescription = ({profile, auth}) => {
                                 <Header icon='smile' content='关于我'/>
                                 <p>工作: <strong>{profile.occupation}</strong></p>
                                 <p>居住地: <strong>{profile.city}</strong></p>
-                                <p>注册时间: <strong>{createdAt}</strong></p>
+                                <p>注册时间: <strong>{createdAt === "Invalid Date" ||  !createdAt ? `${year} 年 ${month} 月 ${day} 日` : createdAt}</strong></p>
                                 <p>简介: {profile.description}</p>
 
                             </Grid.Column>
