@@ -8,7 +8,7 @@ class ActivityListParticipant extends React.Component {
         const person = this.props.participant;
         return (
             <List.Item>
-                <Image as={Link} to={`/profile/${person.id}`} size='mini' circular src={person.photoURL} />
+                <Image as={Link} to={`/profile/${person.id}`} size='mini' circular src={person.photoURL === "../public/assets/user.png" ? '/assets/user.png' : person.photoURL} />
             </List.Item>
         );
     }
