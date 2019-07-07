@@ -34,7 +34,7 @@ const UserDetailDescription = ({profile, auth}) => {
                                 <p>工作: <strong>{profile.occupation}</strong></p>
                                 <p>居住地: <strong>{profile.city}</strong></p>
                                 <p>注册时间: <strong>{createdAt === "Invalid Date" ||  !createdAt ? `${year} 年 ${month} 月 ${day} 日` : createdAt}</strong></p>
-                                <p>简介: {profile.description}</p>
+                                <p>简介: {profile.description ? profile.description : profile.about}</p>
 
                             </Grid.Column>
                             <Grid.Column width={6}>

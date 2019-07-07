@@ -8,13 +8,13 @@ import TextArea from '../../form/TextArea';
 import SelectInput from '../../form/SelectInput';
 
 const interests = [
-  { key: 'party', text: '派对/聚会', value: 'party' },
-  { key: 'culture', text: '文化', value: 'culture' },
-  { key: 'movie', text: '电影', value: 'movie' },
-  { key: 'food', text: '美食', value: 'food' },
-  { key: 'music', text: '音乐', value: 'music' },
-  { key: 'travel', text: '旅行', value: 'travel' },
-  { key: 'knowledge', text: '知识', value: 'knowledge' }
+  { key: 'party', text: '派对/聚会', value: '派对/聚会' },
+  { key: 'culture', text: '文化', value: '文化' },
+  { key: 'movie', text: '电影', value: '电影' },
+  { key: 'food', text: '美食', value: '美食' },
+  { key: 'music', text: '音乐', value: '音乐' },
+  { key: 'travel', text: '旅行', value: '旅行' },
+  { key: 'knowledge', text: '知识', value: '知识' }
 ];
 
 const AboutPage = ({ pristine, submitting, handleSubmit, updateProfile }) => {
