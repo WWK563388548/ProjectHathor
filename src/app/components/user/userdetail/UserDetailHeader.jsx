@@ -1,5 +1,6 @@
 import React from 'react';
 import {Grid, Header, Item, Segment} from 'semantic-ui-react';
+import LazyLoad from 'react-lazyload';
 
 const UserDetailHeader = ({profile}) => {
     console.log("user detail header", profile);
@@ -8,7 +9,13 @@ const UserDetailHeader = ({profile}) => {
             <Segment>
                 <Item.Group>
                     <Item>
-                        <Item.Image avatar size='small' src={profile.photoURL || '/assets/user.png'} />
+                        <LazyLoad>
+                            <Item.Image 
+                                avatar 
+                                size='small' 
+                                src={profile.photoURL || '/assets/user.png'} 
+                            />
+                        </LazyLoad>
                         <Item.Content verticalAlign='bottom'>
                             <Header as='h1'>{profile.displayName}</Header>
                             <br/>
