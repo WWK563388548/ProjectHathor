@@ -4,8 +4,7 @@ import { Link } from 'react-router-dom';
 
 class ActiivityDetailSideBar extends React.Component {
     render() {
-        const isHost = false;
-        const participants = this.props.participants;
+        const { isHost, participants } = this.props;
         console.log("What is member in sidebar", participants);
         return (
             <div>

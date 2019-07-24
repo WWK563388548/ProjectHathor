@@ -68,6 +68,7 @@ class ActivityDetailPage extends Component {
                 </Grid.Column>
                 <Grid.Column width={6}>
                     <DetailSideBar 
+                        isHost={isHost}
                         participants={participants}
                     />
                 </Grid.Column>

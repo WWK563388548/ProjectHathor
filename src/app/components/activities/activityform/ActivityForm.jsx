@@ -244,7 +244,7 @@ class ActivityForm extends React.Component {
                 type="button">
                 关闭
               </Button>
-              {Object.keys(this.props.activity).length > 0 &&
+              { (typeof this.props.activity !== 'undefined' && Object.keys(this.props.activity).length > 0) &&
                 <Button 
                   floated="right"
                   content={this.props.activity.cancelled ? "重新开启活动" : "取消活动"}
