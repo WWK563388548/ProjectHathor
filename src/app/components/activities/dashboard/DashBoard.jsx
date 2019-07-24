@@ -5,12 +5,12 @@ import { Grid } from 'semantic-ui-react';
 import { deleteActivity } from '../activityActions'
 import LoadingComponent from '../../util/loadingComponent';
 import RecentActivity from './RecentActivity';
-import { firestoreConnect } from 'react-redux-firebase';
+import { firestoreConnect, isLoaded } from 'react-redux-firebase';
 
 const mapState = (state) => ({
   // activities: state.activities,
   activities: state.firestore.ordered.activities,
-  loading: state.async.loading,
+  // loading: state.async.loading,
 });
 
 const actions = {
@@ -24,8 +24,8 @@ class DashBoard extends React.Component {
   }
 
   render() {
-
-    if(this.props.loading){
+    const { activities } = this.props;
+    if(!isLoaded(activities)){
       return <LoadingComponent inverted={true} />
     }
 
@@ -34,7 +34,7 @@ class DashBoard extends React.Component {
         <Grid.Column width={10}>
           <ActivityList
           deleteActivity={this.handleDeleteActivity}
-          activities={this.props.activities} />
+          activities={activities} />
         </Grid.Column>
         <Grid.Column width={6}>
           <RecentActivity />
