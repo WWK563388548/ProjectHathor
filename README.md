@@ -28,6 +28,7 @@ Using library/skill:
 * firebase
 * google-map-react
 * moment
+* react-lazyLoad
 * react-cropper
 * react-datepicker
 * react-dropzone
