@@ -9,7 +9,16 @@ const UserDetailHeader = ({profile}) => {
             <Segment>
                 <Item.Group>
                     <Item>
-                        <LazyLoad>
+                        <LazyLoad
+                            height={150}
+                            placeholder={
+                                <Item.Image 
+                                    avatar 
+                                    size='small' 
+                                    src='/assets/user.png'
+                                />
+                            }
+                        >
                             <Item.Image 
                                 avatar 
                                 size='small' 
