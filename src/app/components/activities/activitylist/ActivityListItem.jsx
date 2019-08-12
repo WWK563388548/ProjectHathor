@@ -9,6 +9,7 @@ import { objectToArray } from '../activityActions';
 class ActivityListItem extends React.Component {
     render() {
         const activityItemData = this.props.activity;
+        console.log("getActivityForDashBoard ListItem", activityItemData);
         // const onActivityEdit = this.props.onActivityEdit;
         let date;
         let year, month, day, hours, minutes, seconds;

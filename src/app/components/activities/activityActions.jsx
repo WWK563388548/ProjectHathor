@@ -1,8 +1,9 @@
-import { CREATE_ACTIVITY, UPDATE_ACTIVITY, DELETE_ACTIVITY, FETCH_ACTIVITY } from './activityConstants';
+import { DELETE_ACTIVITY, FETCH_ACTIVITY } from './activityConstants';
 import { asyncActionStart, asyncActionFinsih, asyncActionError } from '../async/asyncActions';
 import { fetchSampleData } from '../../data/mockApi';
 import { toastr } from 'react-redux-toastr';
 import moment from 'moment';
+import firebase from '../../config/firebase';
 
 export const fetchActivities = (activities) => {
     return {
@@ -101,6 +102,36 @@ export const objectToArray = (object) => {
         return Object.entries(object).map(e => Object.assign(e[1], {id: e[0]}));
     }
 }
+
+export const getActivityForDashBoard = () => 
+    async (dispatch, getState) => {
+        let today = new Date();
+        const firestore = firebase.firestore();
+        // Get activities that is  not over yet
+        const activitiesQuery = firestore.collection('activities').where('date', '>=', today);
+        console.log("getActivityForDashBoard first query", activitiesQuery);
+
+        try {
+            dispatch(asyncActionStart());
+            let querySnapshot = await activitiesQuery.get();
+            console.log("getActivityForDashBoard querySnap", querySnapshot);
+            let activities = [];
+            for(let i = 0; i < querySnapshot.docs.length; i++){
+                // Transfer doc to data with data()
+                let activity = {...querySnapshot.docs[i].data(), id: querySnapshot.docs[i].id};
+                activities.push(activity);
+            }
+            console.log("getActivityForDashBoard activities", activities);
+            dispatch({
+                type: FETCH_ACTIVITY,
+                payload: {activities}
+            });
+            dispatch(asyncActionFinsih());
+        } catch (error) {
+            console.log("getActivityForDashBoard", error);
+            dispatch(asyncActionError());
+        }
+    }
 
 const createNewActivity = (user, photoURL, activity) => {
     activity.date = moment(activity.date).toDate();
