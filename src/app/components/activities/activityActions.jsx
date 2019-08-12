@@ -103,16 +103,42 @@ export const objectToArray = (object) => {
     }
 }
 
-export const getActivityForDashBoard = () => 
+export const getActivityForDashBoard = (lastActivity) => 
     async (dispatch, getState) => {
         let today = new Date();
         const firestore = firebase.firestore();
         // Get activities that is  not over yet
-        const activitiesQuery = firestore.collection('activities').where('date', '>=', today);
-
+        // const activitiesQuery = firestore.collection('activities').where('date', '>=', today);
+        const activitiesRef = firestore.collection('activities');
         try {
             dispatch(asyncActionStart());
-            let querySnapshot = await activitiesQuery.get();
+            let startAfter;
+            let query;
+            if(lastActivity){
+                startAfter = firestore
+                    .collection('activities')
+                    .doc(lastActivity.dispatch)
+                    .get();
+            }
+            if(lastActivity){
+                query = activitiesRef
+                    .where('date', '>=', today)
+                    .orderBy('date')
+                    .startAfter(startAfter)
+                    .limit(10);
+            } else {
+                query = activitiesRef
+                    .where('date', '>=', today)
+                    .orderBy('date')
+                    .limit(10);
+            }
+            let querySnapshot = await query.get();
+
+            if(querySnapshot.docs.length === 0){
+                dispatch(asyncActionFinsih());
+                return;
+            }
+
             let activities = [];
             for(let i = 0; i < querySnapshot.docs.length; i++){
                 // Transfer doc to data with data()
@@ -124,6 +150,7 @@ export const getActivityForDashBoard = () =>
                 payload: {activities}
             });
             dispatch(asyncActionFinsih());
+            return querySnapshot;
         } catch (error) {
             console.warn("getActivityForDashBoard failed", error);
             dispatch(asyncActionError());
