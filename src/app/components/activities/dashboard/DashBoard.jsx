@@ -5,7 +5,7 @@ import { Grid } from 'semantic-ui-react';
 import { getActivityForDashBoard } from '../activityActions'
 import LoadingComponent from '../../util/loadingComponent';
 import RecentActivity from './RecentActivity';
-import { firestoreConnect, isLoaded } from 'react-redux-firebase';
+import { firestoreConnect } from 'react-redux-firebase';
 
 const mapState = (state) => ({
   activities: state.activities,

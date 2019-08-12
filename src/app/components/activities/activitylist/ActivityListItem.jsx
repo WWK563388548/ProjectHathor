@@ -2,14 +2,13 @@ import React from 'react';
 import ActivityListParticipant from './ActivityListParticipant';
 import { Segment, Item, Icon, List, Button, Label } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
-import format from 'date-fns/format';
-import chineseLocale from 'date-fns/locale/zh_cn';
+// import format from 'date-fns/format';
+// import chineseLocale from 'date-fns/locale/zh_cn';
 import { objectToArray } from '../activityActions';
 
 class ActivityListItem extends React.Component {
     render() {
         const activityItemData = this.props.activity;
-        console.log("getActivityForDashBoard ListItem", activityItemData);
         // const onActivityEdit = this.props.onActivityEdit;
         let date;
         let year, month, day, hours, minutes, seconds;

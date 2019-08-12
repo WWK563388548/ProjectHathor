@@ -109,26 +109,23 @@ export const getActivityForDashBoard = () =>
         const firestore = firebase.firestore();
         // Get activities that is  not over yet
         const activitiesQuery = firestore.collection('activities').where('date', '>=', today);
-        console.log("getActivityForDashBoard first query", activitiesQuery);
 
         try {
             dispatch(asyncActionStart());
             let querySnapshot = await activitiesQuery.get();
-            console.log("getActivityForDashBoard querySnap", querySnapshot);
             let activities = [];
             for(let i = 0; i < querySnapshot.docs.length; i++){
                 // Transfer doc to data with data()
                 let activity = {...querySnapshot.docs[i].data(), id: querySnapshot.docs[i].id};
                 activities.push(activity);
             }
-            console.log("getActivityForDashBoard activities", activities);
             dispatch({
                 type: FETCH_ACTIVITY,
                 payload: {activities}
             });
             dispatch(asyncActionFinsih());
         } catch (error) {
-            console.log("getActivityForDashBoard", error);
+            console.warn("getActivityForDashBoard failed", error);
             dispatch(asyncActionError());
         }
     }
