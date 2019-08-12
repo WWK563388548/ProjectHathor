@@ -110,35 +110,30 @@ export const getActivityForDashBoard = (lastActivity) =>
         // Get activities that is  not over yet
         // const activitiesQuery = firestore.collection('activities').where('date', '>=', today);
         const activitiesRef = firestore.collection('activities');
+
         try {
             dispatch(asyncActionStart());
-            let startAfter;
+            let startAfter = lastActivity && await firestore.collection('activities').doc(lastActivity.id).get();
             let query;
-            if(lastActivity){
-                startAfter = firestore
-                    .collection('activities')
-                    .doc(lastActivity.dispatch)
-                    .get();
-            }
+
             if(lastActivity){
                 query = activitiesRef
                     .where('date', '>=', today)
                     .orderBy('date')
                     .startAfter(startAfter)
-                    .limit(10);
+                    .limit(3);
             } else {
                 query = activitiesRef
                     .where('date', '>=', today)
                     .orderBy('date')
-                    .limit(10);
+                    .limit(3);
             }
             let querySnapshot = await query.get();
 
             if(querySnapshot.docs.length === 0){
                 dispatch(asyncActionFinsih());
-                return;
+                return querySnapshot;
             }
-
             let activities = [];
             for(let i = 0; i < querySnapshot.docs.length; i++){
                 // Transfer doc to data with data()
