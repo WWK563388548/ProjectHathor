@@ -26,11 +26,8 @@ class DashBoard extends React.Component {
   }
 
   async componentDidMount(){
-    console.log("check loadingInitial 1");
     let next = await this.props.getActivityForDashBoard();
-    console.log("check loadingInitial 1.5", next);
     if(next && next.docs && next.docs.length > 1){
-      console.log("check loadingInitial 2");
       this.setState({
         moreActivity: true,
         loadingInitial: false,
@@ -70,12 +67,18 @@ class DashBoard extends React.Component {
           <ActivityList
             activities={this.state.loadedActivities} />
           <Button 
+            style={{
+              marginTop: '10px',
+            }}
             loading={loading}
+            className="ui fluid button"
             onClick={this.getNextActivities}
             disabled={!this.state.moreActivity}
             content="更多活动" 
+            size='huge'
             color="green" 
-            floated="right" />
+            // floated="right" 
+          />
         </Grid.Column>
         <Grid.Column width={6}>
           <RecentActivity />
