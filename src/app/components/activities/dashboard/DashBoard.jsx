@@ -21,13 +21,27 @@ class DashBoard extends React.Component {
 
   state = {
     moreActivity: false,
+    loadingInitial: true,
+    loadedActivities: [],
   }
 
   async componentDidMount(){
+    console.log("check loadingInitial 1");
     let next = await this.props.getActivityForDashBoard();
+    console.log("check loadingInitial 1.5", next);
     if(next && next.docs && next.docs.length > 1){
+      console.log("check loadingInitial 2");
       this.setState({
         moreActivity: true,
+        loadingInitial: false,
+      });
+    }
+  }
+
+  componentDidUpdate = (prevProps) => {
+    if(this.props.activities !== prevProps.activities){
+      this.setState({
+        loadedActivities: [...this.state.loadedActivities, ...this.props.activities],
       });
     }
   }
@@ -45,8 +59,8 @@ class DashBoard extends React.Component {
   }
 
   render() {
-    const { activities } = this.props;
-    if(this.props.loading){
+    const { activities, loading } = this.props;
+    if(this.state.loadingInitial){
       return <LoadingComponent inverted={true} />
     }
 
@@ -54,8 +68,9 @@ class DashBoard extends React.Component {
       <Grid>
         <Grid.Column width={10}>
           <ActivityList
-            activities={activities} />
+            activities={this.state.loadedActivities} />
           <Button 
+            loading={loading}
             onClick={this.getNextActivities}
             disabled={!this.state.moreActivity}
             content="更多活动" 
