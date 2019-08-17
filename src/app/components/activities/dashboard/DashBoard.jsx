@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import ActivityList from '../activitylist/ActivityList';
-import { Grid, Button } from 'semantic-ui-react';
+import { Grid, Button, Loader } from 'semantic-ui-react';
 import { getActivityForDashBoard } from '../activityActions'
 import LoadingComponent from '../../util/loadingComponent';
 import RecentActivity from './RecentActivity';
@@ -88,6 +88,9 @@ class DashBoard extends React.Component {
         </Grid.Column>
         <Grid.Column width={6}>
           <RecentActivity />
+        </Grid.Column>
+        <Grid.Column width={10}>
+          <Loader active={loading} />
         </Grid.Column>
       </Grid>
     );
