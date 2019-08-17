@@ -13,6 +13,7 @@
     "react-datepicker": "^1.4.1",
     "react-dom": "^16.4.2",
     "react-dropzone": "^7.0.1",
+    "react-infinite-scroller": "1.2.4",
     "react-lazyload": "^2.6.2",
     "react-load-script": "0.0.6",
     "react-places-autocomplete": "^6.1.3",
