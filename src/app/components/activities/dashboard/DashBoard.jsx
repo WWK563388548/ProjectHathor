@@ -56,7 +56,7 @@ class DashBoard extends React.Component {
   }
 
   render() {
-    const { activities, loading } = this.props;
+    const { loading } = this.props;
     if(this.state.loadingInitial){
       return <LoadingComponent inverted={true} />
     }
@@ -65,8 +65,13 @@ class DashBoard extends React.Component {
       <Grid>
         <Grid.Column width={10}>
           <ActivityList
-            activities={this.state.loadedActivities} />
-          <Button 
+            loading={loading}
+            moreActivity={this.state.moreActivity}
+            getNextActivities={this.getNextActivities}
+            activities={this.state.loadedActivities} 
+          />
+          {
+            /*<Button 
             style={{
               marginTop: '10px',
             }}
@@ -78,7 +83,8 @@ class DashBoard extends React.Component {
             size='huge'
             color="green" 
             // floated="right" 
-          />
+            />*/
+          }
         </Grid.Column>
         <Grid.Column width={6}>
           <RecentActivity />
