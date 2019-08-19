@@ -7,6 +7,7 @@ import UserDetailHeader from './UserDetailHeader';
 import UserDetailDescription from './UserDetailDescription';
 import UserDetailSidebar from './UserDetailSidebar';
 import UserDetailPhotos from './UserDetailPhotos';
+import UserDetailActivities from './UserDetailActivities';
 import { userDetailedQuery } from '../userQueries';
 import LoadingComponent from "../../util/loadingComponent";
 
@@ -59,6 +60,7 @@ class UserDetailedPage extends Component {
                 {photos && photos.length > 0 &&
                     <UserDetailPhotos photos={photos} />
                 }
+                <UserDetailActivities/>
             </Grid>
         );
     }
