@@ -5,19 +5,32 @@ import format from 'date-fns/format';
 const UserDetailDescription = ({profile, auth}) => {
     console.log("user detail description 1", profile);
     console.log("user detail description 2", auth);
+    let theCreatedDate;
+    if(profile.createdAt){
+        theCreatedDate = profile.createdAt;
+    } else {
+        theCreatedDate = auth.createdAt;
+    }
     let createdAt;
     let createdAtForObject;
     let year, month, day, hours, minutes, seconds;
 
-    if (typeof profile.createdAt !== "object"){
-        const time = profile.createdAt / 1000;
-        createdAt = format(new Date(time), 'D MMM YYYY');
+    if (typeof theCreatedDate !== "object"){
+        const time = theCreatedDate / 1000;
+        createdAt = new Date(time);
+        year = createdAt.getFullYear();
+        console.log("check time 1", year);
+        month = createdAt.getMonth() + 1;
+        day = createdAt.getDate();
+        // createdAt = format(new Date(time), 'D MMM YYYY');
+        console.log("check time 2", createdAt);
     //    const getDate = newTime.toDate();
 
     //    console.log("check time", getDate)
     //    createdAt = getDate;
     } else {
-        createdAtForObject = profile.createdAt.toDate();
+
+        createdAtForObject = theCreatedDate.toDate();
         year = createdAtForObject.getFullYear();
         month = createdAtForObject.getMonth() + 1;
         day = createdAtForObject.getDate();
@@ -33,7 +46,7 @@ const UserDetailDescription = ({profile, auth}) => {
                                 <Header icon='smile' content='关于我'/>
                                 <p>工作: <strong>{profile.occupation}</strong></p>
                                 <p>居住地: <strong>{profile.city}</strong></p>
-                                <p>注册时间: <strong>{createdAt === "Invalid Date" ||  !createdAt ? `${year} 年 ${month} 月 ${day} 日` : createdAt}</strong></p>
+                                <p>注册时间: <strong>{`${year} 年 ${month} 月 ${day} 日`}</strong></p>
                                 <p>简介: {profile.description ? profile.description : profile.about}</p>
 
                             </Grid.Column>
