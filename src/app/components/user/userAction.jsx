@@ -3,6 +3,7 @@ import { toastr } from 'react-redux-toastr';
 import cuid from 'cuid';
 import {asyncActionStart, asyncActionFinsih, asyncActionError} from '../async/asyncActions';
 import firebase from '../../config/firebase';
+import { FETCH_ACTIVITY } from '../activities/activityConstants';
 
 export const updateProfile = (user) => 
     async (dispatch, getState, {getFirebase, getFirestore}) => {
@@ -200,8 +201,15 @@ export const getUserActivities = (userUid, activeTab) =>
 
             try {
                 let querySnapshot = await query.get();
+                let activities = [];
 
-                console.log("getUserActivities", querySnapshot);
+                for(let i = 0; i < querySnapshot.docs.length; i++){
+                    // console.log("getUserActivities", );
+                    let activity = await firestore.collection('activities').doc(querySnapshot.docs[i].data().activityId).get();
+                    activities.push({...activity.data(), id: activity.id});
+                }
+                dispatch({type: FETCH_ACTIVITY, payload: {activities}});
+
                 dispatch(asyncActionFinsih());
             } catch (error) {
                 console.log("getUserActivities error", error);

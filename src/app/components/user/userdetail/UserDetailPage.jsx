@@ -50,7 +50,7 @@ class UserDetailedPage extends Component {
 
     async componentDidMount(){
         console.log("UserDetailedPage-getUserActivities 1", this.props.userUid);
-        let activities  = await this.props.getUserActivities(this.props.userUid, 3);
+        let activities  = await this.props.getUserActivities(this.props.userUid);
         console.log("UserDetailedPage-getUserActivities 2", activities);
     }
 
