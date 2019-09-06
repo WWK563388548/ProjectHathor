@@ -133,7 +133,7 @@ export const goingToActivity = (activity) =>
             });
             await firestore.set(`activity_participant/${activity.id}_${user.uid}`, {
                 activityId: activity.id,
-                user: user.uid,
+                userUid: user.uid,
                 activityDate: activity.date,
                 host: false,
             });
@@ -204,7 +204,6 @@ export const getUserActivities = (userUid, activeTab) =>
                 let activities = [];
 
                 for(let i = 0; i < querySnapshot.docs.length; i++){
-                    // console.log("getUserActivities", );
                     let activity = await firestore.collection('activities').doc(querySnapshot.docs[i].data().activityId).get();
                     activities.push({...activity.data(), id: activity.id});
                 }
