@@ -10,6 +10,7 @@ import UserDetailPhotos from './UserDetailPhotos';
 import UserDetailActivities from './UserDetailActivities';
 import { userDetailedQuery } from '../userQueries';
 import LoadingComponent from "../../util/loadingComponent";
+import { getUserActivities } from '../userAction';
 
 const mapState = (state, ownProp) => {
     let userUid = null;
@@ -26,6 +27,7 @@ const mapState = (state, ownProp) => {
     if(ownProp.match.params.id === authUid){
         // console.log("state.firebase.profile userDetailPage", state.firebase.profile);
         profile = state.firebase.profile;
+        userUid = ownProp.match.params.id;
     } else {
         profile = !isEmpty(state.firestore.ordered.profile) && state.firestore.ordered.profile[0];
         userUid = ownProp.match.params.id;
@@ -40,7 +42,18 @@ const mapState = (state, ownProp) => {
     };
 };
 
+const actions = {
+    getUserActivities,
+}
+
 class UserDetailedPage extends Component {
+
+    async componentDidMount(){
+        console.log("UserDetailedPage-getUserActivities 1", this.props.userUid);
+        let activities  = await this.props.getUserActivities(this.props.userUid, 3);
+        console.log("UserDetailedPage-getUserActivities 2", activities);
+    }
+
     render(){
         const {profile, photos, auth, match, requesting} = this.props;
         const isCurrentUser = auth.uid === match.params.id;
@@ -68,6 +81,6 @@ class UserDetailedPage extends Component {
 }
 
 export default compose(
-    connect(mapState),
+    connect(mapState, actions),
     firestoreConnect((auth, userUid) => userDetailedQuery(auth, userUid)),
 )(UserDetailedPage);
