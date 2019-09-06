@@ -1,22 +1,27 @@
 import React from 'react';
-import { Card, Grid, Header, Image, Menu, Segment } from 'semantic-ui-react';
+import { Card, Grid, Header, Image, Menu, Segment, Tab } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
-import format from 'date-fns/format';
+
+const panes = [
+  {menuItem: '所有活动', pane: {key: 'allActivities'}},
+  {menuItem: '过去的活动', pane: {key: 'pastActivities'}},
+  {menuItem: '未来的活动', pane: {key: 'futureActivities'}},
+  {menuItem: '我的活动', pane: {key: 'myActivities'}},
+];
 
 const UserDetailActivities = (props) => {
 
-  const { activities, activitiesLoading } = props;
-
+  const { activities, activitiesLoading, changeTab } = props;
   return (
     <Grid.Column width={12}>
       <Segment attached loading={activitiesLoading} >
         <Header icon="calendar" content="活动一览" />
-        <Menu secondary pointing>
-          <Menu.Item name="所有活动" active />
-          <Menu.Item name="过去的活动" />
-          <Menu.Item name="未来的活动" />
-          <Menu.Item name="我的活动" />
-        </Menu>
+        <Tab 
+          onTabChange={(e, data) => changeTab(e, data)}
+          panes={panes} 
+          menu={{secondary: true, pointing: true}} 
+        />
+        <br />
 
         <Card.Group itemsPerRow={5}>
           {activities && activities.map(activity => {

@@ -56,6 +56,10 @@ class UserDetailedPage extends Component {
         console.log("UserDetailedPage-getUserActivities 2", activities);
     }
 
+    changeTab = (e, data) => {
+        this.props.getUserActivities(this.props.userUid, data.activeIndex);
+    }
+
     render(){
         const {profile, photos, auth, match, requesting, activities, activitiesLoading} = this.props;
         const isCurrentUser = auth.uid === match.params.id;
@@ -78,6 +82,7 @@ class UserDetailedPage extends Component {
                 <UserDetailActivities 
                     activities={activities} 
                     activitiesLoading={activitiesLoading}
+                    changeTab={this.changeTab}
                 />
             </Grid>
         );
