@@ -16,7 +16,7 @@ const mapState = (state, ownProp) => {
     let userUid = null;
     let profile = {};
     let authUid = null;
-    // console.log("state.firebase.profile userDetailPage -1", state);
+    console.log("state.firebase.profile userDetailPage -1", state);
     // console.log("state.firebase.profile userDetailPage 0", ownProp.match.params.id);
     // console.log("state.firebase.profile userDetailPage 1", state.auth.uid);
     if(state.auth.uid){
@@ -36,6 +36,8 @@ const mapState = (state, ownProp) => {
     return {
         profile,
         userUid,
+        activities: state.activities,
+        activitiesLoading: state.async.loading,
         auth: state.firebase.auth,
         photos: state.firestore.ordered.photos,
         requesting: state.firestore.status.requesting,
@@ -55,7 +57,7 @@ class UserDetailedPage extends Component {
     }
 
     render(){
-        const {profile, photos, auth, match, requesting} = this.props;
+        const {profile, photos, auth, match, requesting, activities, activitiesLoading} = this.props;
         const isCurrentUser = auth.uid === match.params.id;
         const loading = Object.values(requesting).some(a => a === true);
         // console.log("UserDetailedPage", this.props);
@@ -73,7 +75,10 @@ class UserDetailedPage extends Component {
                 {photos && photos.length > 0 &&
                     <UserDetailPhotos photos={photos} />
                 }
-                <UserDetailActivities/>
+                <UserDetailActivities 
+                    activities={activities} 
+                    activitiesLoading={activitiesLoading}
+                />
             </Grid>
         );
     }
