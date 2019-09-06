@@ -2,6 +2,7 @@ import moment from 'moment';
 import { toastr } from 'react-redux-toastr';
 import cuid from 'cuid';
 import {asyncActionStart, asyncActionFinsih, asyncActionError} from '../async/asyncActions';
+import firebase from '../../config/firebase';
 
 export const updateProfile = (user) => 
     async (dispatch, getState, {getFirebase, getFirestore}) => {
@@ -142,7 +143,7 @@ export const goingToActivity = (activity) =>
         }
     };
 
-    export const cancelGoingToActivity = (activity) =>
+export const cancelGoingToActivity = (activity) =>
         async (dispatch, getState, {getFirebase, getFirestore}) => {
             const firebase = getFirebase();
             const firestore = getFirestore();
@@ -161,5 +162,49 @@ export const goingToActivity = (activity) =>
             } catch(error){
                 console.log("cancelGoingToActivity", error);
                 toastr.error('啊哦', "退出活动失败");
+            }
+        };
+
+    
+export const getUserActivities = (userUid, activeTab) => 
+        async (dispatch, getState) => {
+            dispatch(asyncActionStart());
+            const firestore = firebase.firestore();
+            const today = new Date(Date.now());
+            const activitiesRef = firestore.collection('activity_participant');
+            let query;
+            switch(activeTab){
+                case 1: // past activities
+                    query = activitiesRef
+                    .where('userUid', '==', userUid)
+                    .where('activityDate', '<=', today)
+                    .orderBy('activityDate', 'desc');
+                    break;
+                case 2: // future activities
+                    query = activitiesRef
+                    .where('userUid', '==', userUid)
+                    .where('activityDate', '>=', today)
+                    .orderBy('activityDate');
+                    break;
+                case 3: // own activities
+                    query = activitiesRef
+                    .where('userUid', '==', userUid)
+                    .where('host', '==', true)
+                    .orderBy('activityDate', 'desc');
+                    break;
+                default:
+                    query = activitiesRef
+                    .where('userUid', '==', userUid)
+                    .orderBy('activityDate', 'desc');
+            }
+
+            try {
+                let querySnapshot = await query.get();
+
+                console.log("getUserActivities", querySnapshot);
+                dispatch(asyncActionFinsih());
+            } catch (error) {
+                console.log("getUserActivities error", error);
+                dispatch(asyncActionError());
             }
         };
