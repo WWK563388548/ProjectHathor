@@ -1,16 +1,17 @@
 import React, {Component} from 'react';
 import { Grid } from 'semantic-ui-react';
 import { connect } from 'react-redux';
+import { compose } from 'redux';
 import DetailHeader from './ActivityDetailHeader';
 import DetailInfo from './ActivityDetailInfo';
 import DetailChat from './ActivityDetailChat';
 import DetailSideBar from './ActivityDetailSideBar';
-import { withFirestore } from 'react-redux-firebase';
-import { objectToArray } from '../activityActions';
+import { withFirestore, firebaseConnect } from 'react-redux-firebase';
+import { objectToArray, addActivityComment } from '../activityActions';
 import { goingToActivity, cancelGoingToActivity } from '../../user/userAction';
 
 const  mapState = (state) => {
-    // console.log("the detail page 1", state);
+    console.log("the detail page 1", state);
     let activity = {};
 
     if(state.firestore.ordered.activities && state.firestore.ordered.activities[0]) {
@@ -27,6 +28,7 @@ const  mapState = (state) => {
 const action = {
     goingToActivity,
     cancelGoingToActivity,
+    addActivityComment
 };
 
 class ActivityDetailPage extends Component {
@@ -47,7 +49,7 @@ class ActivityDetailPage extends Component {
 
     render() {
         console.log("DetailPage", this.props);
-        const {activity, auth, goingToActivity, cancelGoingToActivity} = this.props;
+        const {activity, auth, goingToActivity, cancelGoingToActivity, addActivityComment} = this.props;
         const participants = activity && activity.participants && objectToArray(activity.participants);
         const isHost = activity.hostUid === auth.uid;
         const isGoing = participants && participants.some(participant => participant.id === auth.uid);
@@ -64,7 +66,10 @@ class ActivityDetailPage extends Component {
                     <DetailInfo 
                         activity={activity}
                     />
-                    <DetailChat />
+                    <DetailChat 
+                        addActivityComment={addActivityComment}
+                        activityId={activity.id}
+                    />
                 </Grid.Column>
                 <Grid.Column width={6}>
                     <DetailSideBar 
@@ -77,4 +82,8 @@ class ActivityDetailPage extends Component {
     }
 }
 
-export default withFirestore(connect(mapState, action)(ActivityDetailPage));
+export default compose(
+    withFirestore,
+    connect(mapState, action),
+    firebaseConnect((props) => ([`activity_chat/${props.match.params.id}`]))
+)(ActivityDetailPage);

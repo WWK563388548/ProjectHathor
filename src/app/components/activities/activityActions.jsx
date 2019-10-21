@@ -171,3 +171,14 @@ const createNewActivity = (user, photoURL, activity) => {
         },
     };
 }
+
+export const addActivityComment = (activityId, comment) => 
+    async (dispatch, getState, {getFirebase}) => {
+        const firebase = getFirebase();
+        try {
+            await firebase.push(`activity_chat/${activityId}`, comment);
+        } catch(error) {
+            console.log("addActivityComment error", error);
+            toastr.error('错误', '无法添加评论');
+        }
+    };
