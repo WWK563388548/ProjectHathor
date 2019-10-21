@@ -1,8 +1,10 @@
 import React from 'react';
-import { Segment, Header, Comment, Form, Button } from 'semantic-ui-react';
+import { Segment, Header, Comment } from 'semantic-ui-react';
+import ActivityDetailChatForm from './ActivityDetailChatForm'
 
 class ActiivityDetailChat extends React.Component {
     render() {
+        const { addActivityComment, activityId } = this.props;
         return (
             <div>
                 <Segment
@@ -30,64 +32,11 @@ class ActiivityDetailChat extends React.Component {
                                 </Comment.Actions>
                                 </Comment.Content>
                         </Comment>
-    
-                        <Comment>
-                            <Comment.Avatar src="/assets/user.png" />
-                            <Comment.Content>
-                                <Comment.Author as="a">Shuo Yang</Comment.Author>
-                                <Comment.Metadata>
-                                    <div>2018/08/31 12:30AM</div>
-                                </Comment.Metadata>
-                                <Comment.Text>
-                                    <p>
-                                        This has been very useful for my research. Thanks as well!
-                                    </p>
-                                </Comment.Text>
-                                <Comment.Actions>
-                                    <Comment.Action>回复</Comment.Action>
-                                </Comment.Actions>
-                            </Comment.Content>
-                            <Comment.Group>
-                                <Comment>
-                                    <Comment.Avatar src="/assets/user.png" />
-                                    <Comment.Content>
-                                        <Comment.Author as="a">ZiWei Yao</Comment.Author>
-                                        <Comment.Metadata>
-                                            <div>2018/09/12 12:30AM</div>
-                                        </Comment.Metadata>
-                                        <Comment.Text>Nice! :)</Comment.Text>
-                                        <Comment.Actions>
-                                            <Comment.Action>回复</Comment.Action>
-                                        </Comment.Actions>
-                                    </Comment.Content>
-                                </Comment>
-                            </Comment.Group>
-                        </Comment>
-    
-                        <Comment>
-                            <Comment.Avatar src="/assets/user.png" />
-                            <Comment.Content>
-                                <Comment.Author as="a">Lian Li</Comment.Author>
-                                <Comment.Metadata>
-                                    <div>2018/09/14</div>
-                                </Comment.Metadata>
-                                <Comment.Text>Dude, this is awesome. Thanks so much</Comment.Text>
-                                <Comment.Actions>
-                                    <Comment.Action>回复</Comment.Action>
-                                </Comment.Actions>
-                            </Comment.Content>
-                        </Comment>
-    
-                        <Form reply>
-                            <Form.TextArea />
-                            <Button
-                                content="发表内容"
-                                labelPosition="left"
-                                icon="edit"
-                                primary
-                            />
-                        </Form>
                     </Comment.Group>
+                    <ActivityDetailChatForm 
+                        addActivityComment={addActivityComment}
+                        activityId={activityId}
+                    />
                 </Segment>
             </div>
         );
