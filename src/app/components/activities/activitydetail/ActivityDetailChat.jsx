@@ -12,18 +12,27 @@ class ActiivityDetailChat extends React.Component {
 
         this.state = {
             showReplyForm: false,
+            selectedCommentId: null,
         };
     }
 
-    handleOpenReplyForm = () => {
+    handleOpenReplyForm = (id) => () => {
         this.setState({
             showReplyForm: true,
+            selectedCommentId: id,
+        });
+    }
+
+    handleCloseReplyForm = () => {
+        this.setState({
+            showReplyForm: false,
+            selectedCommentId: null,
         });
     }
 
     render() {
         const { addActivityComment, activityId, activityChat } = this.props;
-        const { showReplyForm } = this.state;
+        const { showReplyForm, selectedCommentId } = this.state;
         return (
             <div>
                 <Segment
@@ -50,15 +59,17 @@ class ActiivityDetailChat extends React.Component {
                                     </Comment.Metadata>
                                     <Comment.Text>{comment.texts}</Comment.Text>
                                     <Comment.Actions>
-                                        <Comment.Action onClick={this.handleOpenReplyForm}>
+                                        <Comment.Action onClick={this.handleOpenReplyForm(comment.id)}>
                                             回复
                                         </Comment.Action>
-                                        {showReplyForm && 
+                                        {showReplyForm && selectedCommentId === comment.id && (
                                             <ActivityDetailChatForm 
                                                 addActivityComment={addActivityComment}
                                                 activityId={activityId}
+                                                form={`reply_${comment.id}`}
+                                                closeForm={this.handleCloseReplyForm}
                                             />
-                                        }
+                                        )}
                                     </Comment.Actions>
                                 </Comment.Content>
                             </Comment>
@@ -67,6 +78,7 @@ class ActiivityDetailChat extends React.Component {
                     <ActivityDetailChatForm 
                         addActivityComment={addActivityComment}
                         activityId={activityId}
+                        form={'newComment'}
                     />
                 </Segment>
             </div>

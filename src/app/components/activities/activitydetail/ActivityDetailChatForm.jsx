@@ -7,9 +7,10 @@ import TextArea from '../../form/TextArea';
 class ActivityDetailChatForm extends Component {
 
     handleCommentSubmit = values => {
-        const { addActivityComment, reset, activityId } = this.props;
+        const { addActivityComment, reset, activityId, closeForm } = this.props;
         addActivityComment(activityId, values);
         reset();
+        closeForm();
     }
 
     render() {
