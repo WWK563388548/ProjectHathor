@@ -6,8 +6,24 @@ import cn from 'date-fns/locale/zh_cn';
 import ActivityDetailChatForm from './ActivityDetailChatForm'
 
 class ActiivityDetailChat extends React.Component {
+
+    constructor(props){
+        super(props);
+
+        this.state = {
+            showReplyForm: false,
+        };
+    }
+
+    handleOpenReplyForm = () => {
+        this.setState({
+            showReplyForm: true,
+        });
+    }
+
     render() {
         const { addActivityComment, activityId, activityChat } = this.props;
+        const { showReplyForm } = this.state;
         return (
             <div>
                 <Segment
@@ -34,7 +50,15 @@ class ActiivityDetailChat extends React.Component {
                                     </Comment.Metadata>
                                     <Comment.Text>{comment.texts}</Comment.Text>
                                     <Comment.Actions>
-                                        <Comment.Action>回复</Comment.Action>
+                                        <Comment.Action onClick={this.handleOpenReplyForm}>
+                                            回复
+                                        </Comment.Action>
+                                        {showReplyForm && 
+                                            <ActivityDetailChatForm 
+                                                addActivityComment={addActivityComment}
+                                                activityId={activityId}
+                                            />
+                                        }
                                     </Comment.Actions>
                                 </Comment.Content>
                             </Comment>
