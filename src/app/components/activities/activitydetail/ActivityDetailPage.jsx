@@ -2,26 +2,26 @@ import React, {Component} from 'react';
 import { Grid } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import DetailHeader from './ActivityDetailHeader';
-import DetailInfo from './ActivityDetailInfo';
-import DetailChat from './ActivityDetailChat';
+import ActivityDetailHeader from './ActivityDetailHeader';
+import ActivityDetailInfo from './ActivityDetailInfo';
+import ActivityDetailChat from './ActivityDetailChat';
 import DetailSideBar from './ActivityDetailSideBar';
-import { withFirestore, firebaseConnect } from 'react-redux-firebase';
+import { withFirestore, firebaseConnect, isEmpty } from 'react-redux-firebase';
 import { objectToArray, addActivityComment } from '../activityActions';
 import { goingToActivity, cancelGoingToActivity } from '../../user/userAction';
 
 const  mapState = (state) => {
-    console.log("the detail page 1", state);
+    // console.log("the detail page 1", state);
     let activity = {};
 
     if(state.firestore.ordered.activities && state.firestore.ordered.activities[0]) {
         activity = state.firestore.ordered.activities.filter(a => location.href.indexOf(a.id) > 0)[0]; // eslint-disable-line
     }
-
-    // console.log(activity);
+    // console.log('check activity', activity);
     return {
         activity,
         auth: state.firebase.auth,
+        activityChat: !isEmpty(state.firebase.data.activity_chat) && objectToArray(state.firebase.data.activity_chat[activity.id])
     };
 }
 
@@ -49,24 +49,32 @@ class ActivityDetailPage extends Component {
 
     render() {
         console.log("DetailPage", this.props);
-        const {activity, auth, goingToActivity, cancelGoingToActivity, addActivityComment} = this.props;
+        const {
+            activity, 
+            auth, 
+            goingToActivity, 
+            cancelGoingToActivity, 
+            addActivityComment,
+            activityChat,
+        } = this.props;
         const participants = activity && activity.participants && objectToArray(activity.participants);
         const isHost = activity.hostUid === auth.uid;
         const isGoing = participants && participants.some(participant => participant.id === auth.uid);
         return (
             <Grid>
                 <Grid.Column width={10}>
-                    <DetailHeader 
+                    <ActivityDetailHeader 
                         activity={activity}
                         isGoing={isGoing}
                         isHost={isHost}
                         goingToActivity={goingToActivity}
                         cancelGoingToActivity={cancelGoingToActivity}
                     />
-                    <DetailInfo 
+                    <ActivityDetailInfo 
                         activity={activity}
                     />
-                    <DetailChat 
+                    <ActivityDetailChat
+                        activityChat={activityChat} 
                         addActivityComment={addActivityComment}
                         activityId={activity.id}
                     />

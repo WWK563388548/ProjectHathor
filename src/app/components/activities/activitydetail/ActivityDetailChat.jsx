@@ -1,10 +1,13 @@
 import React from 'react';
 import { Segment, Header, Comment } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
+import distanceInWords from 'date-fns/distance_in_words';
+import cn from 'date-fns/locale/zh_cn';
 import ActivityDetailChatForm from './ActivityDetailChatForm'
 
 class ActiivityDetailChat extends React.Component {
     render() {
-        const { addActivityComment, activityId } = this.props;
+        const { addActivityComment, activityId, activityChat } = this.props;
         return (
             <div>
                 <Segment
@@ -19,19 +22,23 @@ class ActiivityDetailChat extends React.Component {
     
                 <Segment attached>
                     <Comment.Group>
-                        <Comment>
-                            <Comment.Avatar src="/assets/user.png" />
-                            <Comment.Content>
-                                <Comment.Author as="a">Kejun Chen</Comment.Author>
-                                <Comment.Metadata>
-                                    <div>2018/08/30 5:42PM</div>
-                                </Comment.Metadata>
-                                <Comment.Text>测试一下</Comment.Text>
-                                <Comment.Actions>
-                                    <Comment.Action>回复</Comment.Action>
-                                </Comment.Actions>
+                        {activityChat && activityChat.map(comment => (
+                            <Comment key={comment.id}>
+                                <Comment.Avatar src={comment.photoURL || "/assets/user.png"} />
+                                <Comment.Content>
+                                    <Comment.Author as={Link} to={`/profile/${comment.uid}`}>
+                                        {comment.displayName}
+                                    </Comment.Author>
+                                    <Comment.Metadata>
+                                        <div>{distanceInWords(comment.date, Date.now(), { locale: cn })} 之前</div>
+                                    </Comment.Metadata>
+                                    <Comment.Text>{comment.texts}</Comment.Text>
+                                    <Comment.Actions>
+                                        <Comment.Action>回复</Comment.Action>
+                                    </Comment.Actions>
                                 </Comment.Content>
-                        </Comment>
+                            </Comment>
+                        ))}
                     </Comment.Group>
                     <ActivityDetailChatForm 
                         addActivityComment={addActivityComment}
