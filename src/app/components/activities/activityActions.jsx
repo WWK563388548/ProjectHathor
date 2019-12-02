@@ -172,14 +172,15 @@ const createNewActivity = (user, photoURL, activity) => {
     };
 }
 
-export const addActivityComment = (activityId, values) => 
+export const addActivityComment = (activityId, values, parentId) => 
     async (dispatch, getState, {getFirebase}) => {
         const firebase = getFirebase();
         const profile = getState().firebase.profile;
         const user = firebase.auth().currentUser;
 
         let newComment = {
-            displayName: profile.displayName,
+            parentId: parentId,
+            displayName: profile.displayName || `游客${user.uid}`,
             photoURL: profile.photoURL || "/assets/user.png",
             uid: user.uid,
             texts: values.comment,

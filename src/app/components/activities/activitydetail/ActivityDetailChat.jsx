@@ -66,16 +66,49 @@ class ActiivityDetailChat extends React.Component {
                                             <ActivityDetailChatForm 
                                                 addActivityComment={addActivityComment}
                                                 activityId={activityId}
+                                                parentId={comment.id}
                                                 form={`reply_${comment.id}`}
                                                 closeForm={this.handleCloseReplyForm}
                                             />
                                         )}
                                     </Comment.Actions>
                                 </Comment.Content>
+
+                                {comment.childNodes && comment.childNodes.map(child => (
+                                    <Comment.Group>
+                                        <Comment key={child.id}>
+                                            <Comment.Avatar src={child.photoURL || "/assets/user.png"} />
+                                            <Comment.Content>
+                                                <Comment.Author as={Link} to={`/profile/${child.uid}`}>
+                                                    {child.displayName}
+                                                </Comment.Author>
+                                                <Comment.Metadata>
+                                                    <div>{distanceInWords(child.date, Date.now(), { locale: cn })} 之前</div>
+                                                </Comment.Metadata>
+                                                <Comment.Text>{child.texts}</Comment.Text>
+                                                <Comment.Actions>
+                                                    <Comment.Action onClick={this.handleOpenReplyForm(child.id)}>
+                                                        回复
+                                                    </Comment.Action>
+                                                    { showReplyForm && selectedCommentId === child.id && (
+                                                        <ActivityDetailChatForm 
+                                                            addActivityComment={addActivityComment}
+                                                            activityId={activityId}
+                                                            parentId={child.parentId}
+                                                            form={`reply_${child.id}`}
+                                                            closeForm={this.handleCloseReplyForm}
+                                                        />
+                                                    )}
+                                                </Comment.Actions>
+                                            </Comment.Content>
+                                        </Comment>
+                                    </Comment.Group>
+                                ))}
                             </Comment>
                         ))}
                     </Comment.Group>
                     <ActivityDetailChatForm 
+                        parentId={0}
                         addActivityComment={addActivityComment}
                         activityId={activityId}
                         form={'newComment'}

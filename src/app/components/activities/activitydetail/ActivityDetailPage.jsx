@@ -9,6 +9,7 @@ import DetailSideBar from './ActivityDetailSideBar';
 import { withFirestore, firebaseConnect, isEmpty } from 'react-redux-firebase';
 import { objectToArray, addActivityComment } from '../activityActions';
 import { goingToActivity, cancelGoingToActivity } from '../../user/userAction';
+import { createDataTree } from '../../util/lib';
 
 const  mapState = (state) => {
     // console.log("the detail page 1", state);
@@ -60,6 +61,7 @@ class ActivityDetailPage extends Component {
         const participants = activity && activity.participants && objectToArray(activity.participants);
         const isHost = activity.hostUid === auth.uid;
         const isGoing = participants && participants.some(participant => participant.id === auth.uid);
+        const chatTree = !isEmpty(activityChat) && createDataTree(activityChat);
         return (
             <Grid>
                 <Grid.Column width={10}>
@@ -74,7 +76,7 @@ class ActivityDetailPage extends Component {
                         activity={activity}
                     />
                     <ActivityDetailChat
-                        activityChat={activityChat} 
+                        activityChat={chatTree} 
                         addActivityComment={addActivityComment}
                         activityId={activity.id}
                     />
