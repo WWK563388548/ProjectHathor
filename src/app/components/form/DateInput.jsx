@@ -7,7 +7,12 @@ import moment from 'moment';
 // '...rest' 代表可以传入更多的属性(properties)
 const DateInput = ({input: {value, onChange, onBlur, ...restInput}, width, placeholder, meta:{touched, error}, ...rest}) => {
     if (value) {
-        value = moment(value, 'X')
+        if(typeof value === 'string'){
+            const momentDate = moment(value);
+            value = momentDate.format("YYYY-MM-DD");
+        } else {
+            value = moment(value, 'X');
+        }
     }      
     return (
         <Form.Field error={touched && !!error} width={width}>
